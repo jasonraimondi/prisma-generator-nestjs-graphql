@@ -2,3 +2,6 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npm run --prefix example gen
+git reset
+git add example/generated
+git commit -m "chore: resync generated examples"
