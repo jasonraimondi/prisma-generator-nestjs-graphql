@@ -4,13 +4,14 @@ datasource db {
 }
 
 generator custom_generator {
-  provider = "ts-node node_modules/prisma-generator-nestjs-graphql-strict/src/generator.ts"
-  output   = "../generated/models"
+  provider   = "ts-node node_modules/prisma-generator-nestjs-graphql-strict/src/generator.ts"
+  output     = "../generated"
+  clientPath = "@prisma/client"
 }
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/client"
+  //  output   = "../generated/client"
 }
 
 model User {
