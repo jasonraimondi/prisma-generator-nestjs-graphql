@@ -27,10 +27,7 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
           registry-url: 'https://registry.npmjs.org'
       - run: pnpm i --frozen-lockfile --production false
-      # --no-git-checks is used for publish because we are
-      # adding a copy of  the root README.md into the core package
-      - run: cp README.md packages/core/README.md
-      - if: github.ref_name == 'master'
-        run: pnpm publish --access=public --no-git-checks
+      - if: github.ref_name == 'main'
+        run: pnpm publish --access=public
       - if: github.ref_name == 'next'
-        run: pnpm publish --access=public --no-git-checks --publish-branch next --tag next
+        run: pnpm publish --access=public --publish-branch next --tag next
