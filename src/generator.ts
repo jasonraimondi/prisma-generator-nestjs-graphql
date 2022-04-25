@@ -32,7 +32,7 @@ generatorHandler({
       const dtoPath = writePath(`/${modelInfo.name}.dto.ts`);
       await writeFileSafely(dtoPath, dtoTemplate);
     }
-    //
+
     const registerEnumsPath = writePath(`register.ts`);
     await writeFileSafely(
       registerEnumsPath,
