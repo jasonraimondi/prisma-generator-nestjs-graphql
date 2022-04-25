@@ -37,7 +37,7 @@ generatorHandler({
     const registerEnumsPath = writePath(`register.ts`);
     await writeFileSafely(
       registerEnumsPath,
-      registerEnumsTemplate({
+      registerEnumsTemplate(clientPath, {
         enums: options.dmmf.datamodel.enums,
       }),
     );
