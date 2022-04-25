@@ -5,7 +5,7 @@
 
 import { ObjectType, Field, HideField } from "@nestjs/graphql";
 
-import { UserProvider as PrismaUserProvider, Provider } from "../client";
+import { UserProvider as PrismaUserProvider, Provider } from "@prisma/client";
 
 import { BaseUser } from "./User.model";
 

@@ -8,7 +8,7 @@ import { IsEmail, IsDate, MaxDate, IsIP } from "class-validator";
 
 import { ObjectType, Field, ID, HideField } from "@nestjs/graphql";
 
-import { User as PrismaUser } from "../client";
+import { User as PrismaUser } from "@prisma/client";
 
 import { BaseEmailConfirmationToken } from "./EmailConfirmationToken.model";
 import { BaseForgotPasswordToken } from "./ForgotPasswordToken.model";

@@ -7,7 +7,7 @@ import { v4 } from "uuid";
 
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 
-import { EmailConfirmationToken as PrismaEmailConfirmationToken } from "../client";
+import { EmailConfirmationToken as PrismaEmailConfirmationToken } from "@prisma/client";
 
 import { BaseUser } from "./User.model";
 

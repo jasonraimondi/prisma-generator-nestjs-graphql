@@ -4,8 +4,7 @@
 /////////////////////////////////////
 
 import { Field, InputType } from "@nestjs/graphql";
-
-import { Provider } from "../client";
+import { Provider } from "@prisma/client";
 
 import { UserProviderConstructor } from "./UserProvider.model";
 import { PaginatorInputs } from "./paginator";

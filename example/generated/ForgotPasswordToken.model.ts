@@ -7,7 +7,7 @@ import { v4 } from "uuid";
 
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 
-import { ForgotPasswordToken as PrismaForgotPasswordToken } from "../client";
+import { ForgotPasswordToken as PrismaForgotPasswordToken } from "@prisma/client";
 
 import { BaseUser } from "./User.model";
 

@@ -5,7 +5,7 @@
 
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 
-import { Role as PrismaRole } from "../client";
+import { Role as PrismaRole } from "@prisma/client";
 
 import { BaseRolePermission } from "./RolePermission.model";
 import { BaseUserPermission } from "./UserPermission.model";
