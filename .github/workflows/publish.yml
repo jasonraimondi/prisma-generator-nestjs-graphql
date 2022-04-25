@@ -2,8 +2,6 @@ name: Publish
 
 on:
   push:
-  pull_request:
-  release:
 
 env:
   NODE_VERSION: 16.13.2
@@ -11,7 +9,6 @@ env:
 
 jobs:
   publish:
-    if: github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'next')
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

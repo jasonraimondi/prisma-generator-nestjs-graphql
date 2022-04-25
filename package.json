@@ -3,8 +3,10 @@
   "version": "1.0.0-rc.1",
   "main": "src/generator.ts",
   "scripts": {
+    "build": "tsc",
     "format": "prettier --write \"src/**/*.(t|j)s*\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepublish": "rm -rf ./dist && pnpm build"
   },
   "dependencies": {
     "@prisma/client": "^3.12.0",
