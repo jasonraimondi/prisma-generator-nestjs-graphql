@@ -9,6 +9,7 @@ importers:
       '@prisma/sdk': ^3.12.0
       '@types/node': ^17.0.24
       '@types/prettier': ^2.6.0
+      prettier: ^2.6.2
       prisma: ^3.12.0
       typescript: ^4.6.3
     dependencies:
@@ -18,6 +19,7 @@ importers:
     devDependencies:
       '@types/node': 17.0.26
       '@types/prettier': 2.6.0
+      prettier: 2.6.2
       prisma: 3.12.0
       typescript: 4.6.3
 
@@ -1646,7 +1648,6 @@ packages:
     resolution: {integrity: sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==}
     engines: {node: '>=10.13.0'}
     hasBin: true
-    dev: false
 
   /prettysize/2.0.0:
     resolution: {integrity: sha512-VVtxR7sOh0VsG8o06Ttq5TrI1aiZKmC+ClSn4eBPaNf4SHr5lzbYW+kYGX3HocBL/MfpVrRfFZ9V3vCbLaiplg==}

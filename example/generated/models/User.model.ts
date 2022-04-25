@@ -4,8 +4,10 @@
 /////////////////////////////////////
 
 import { v4 } from "uuid";
-import { ObjectType, Field, ID, HideField } from "@nestjs/graphql";
 import { IsEmail, IsDate, MaxDate, IsIP } from "class-validator";
+
+import { ObjectType, Field, ID, HideField } from "@nestjs/graphql";
+
 import { User as PrismaUser } from "../client";
 
 import { BaseEmailConfirmationToken } from "./EmailConfirmationToken.model";

@@ -42,7 +42,7 @@ generatorHandler({
     );
 
     const contents = await fs.readFile(path.join(__dirname, "../copy/paginator.ts"));
-    await writeFileSafely(writePath("/paginator.ts"), contents.toString())
+    await writeFileSafely(writePath("/paginator.ts"), contents.toString());
 
     const globPath = writePath(`/`);
     const files = (await fs.readdir(globPath)).map(name => name.replace(".ts", ""));
