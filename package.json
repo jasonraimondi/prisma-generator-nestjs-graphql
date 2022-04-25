@@ -1,6 +1,6 @@
 {
-  "name": "prisma-generator-nestjs-graphql-strict",
-  "version": "1.0.0",
+  "name": "@jmondi/prisma-generator-nestjs-graphql",
+  "version": "1.0.0-rc.1",
   "main": "src/generator.ts",
   "scripts": {
     "format": "prettier --write \"src/**/*.(t|j)s*\"",
@@ -18,5 +18,10 @@
     "prisma": "^3.12.0",
     "typescript": "^4.6.3",
     "husky": "^7.0.0"
+  },
+  "publishConfig": {
+    "main": "dist/generator.js",
+    "private": false,
+    "license": "MIT"
   }
 }
