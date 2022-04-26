@@ -8,6 +8,7 @@
     "gen:watch": "prisma generate --watch"
   },
   "devDependencies": {
+    "@jmondi/prisma-generator-nestjs-graphql": "workspace:*",
     "@ngneat/falso": "^4.0.0",
     "@types/node": "^17.0.24",
     "bcryptjs": "^2.4.3",
