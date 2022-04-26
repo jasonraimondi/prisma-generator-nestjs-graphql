@@ -1,6 +1,6 @@
 {
   "name": "@jmondi/prisma-generator-nestjs-graphql",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "main": "src/generator.ts",
   "scripts": {
     "build": "tsc",
