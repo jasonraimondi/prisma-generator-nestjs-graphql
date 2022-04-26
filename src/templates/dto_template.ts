@@ -96,20 +96,20 @@ import { PaginatorInputs } from "./paginator";
 @InputType()
 export class ${model.name}CreateInput implements ${model.name}Constructor {
 ${model.fields
-    .filter(f => !f.relationName)
-    .filter(f => !f.isUpdatedAt)
-    .map(createField)
-    .join("")}
+  .filter(f => !f.relationName)
+  .filter(f => !f.isUpdatedAt)
+  .map(createField)
+  .join("")}
 }
 
 @InputType()
 export class ${model.name}UpdateInput {
 ${model.fields
-    .filter(f => !f.relationName)
-    .filter(f => !f.isUpdatedAt)
-    .filter(hasRelatedFields)
-    .map(updateField)
-    .join("")}
+  .filter(f => !f.relationName)
+  .filter(f => !f.isUpdatedAt)
+  .filter(hasRelatedFields)
+  .map(updateField)
+  .join("")}
 }
 
 @InputType()
