@@ -10,7 +10,7 @@ npm install @jmondi/prisma-generator-nestjs-graphql
 yarn add @jmondi/prisma-generator-nestjs-graphql
 ```
 
-## Usage 
+## Usage
 
 ```prisma
 generator custom_generator {
@@ -254,5 +254,47 @@ export class UserUpdateInput {
 }
 
 @InputType()
-export class UserPaginatorInput extends PaginatorInputs {}
+export class UserPaginatorInput extends PaginatorInputs {
+}
 ```
+
+Example repository
+
+```typescript
+export class UserRepository {
+  constructor(private readonly repository: PrismaService) {
+  }
+
+  async listUsers(input: UserPaginatorInput): Promise<UserPaginatorResponse> {
+    let users = await this.repository.user.findMany({
+      take: input.take,
+      skip: input.cursorId ? 1 : undefined,
+      cursor: input.cursorId ? { id: input.cursorId } : undefined,
+    });
+    const result = new UserPaginatorResponse();
+    result.data = users.map(b => new User(b));
+    return paginatorResponse(input, result);
+  }
+
+  async getUser(id: string) {
+    return new User(
+      await this.repository.user.findUnique({
+        rejectOnNotFound: true,
+        where: { id },
+      }),
+    );
+  }
+
+  async createUser(input: UserCreateInput) {
+    await this.repository.user.create({ data: input });
+    return true;
+  }
+
+  async updateUser(input: UserUpdateInput) {
+    const { id, ...data } = input;
+    await this.repository.user.update({ where: { id }, data });
+    return true;
+  }
+}
+```
+
