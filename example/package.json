@@ -5,8 +5,7 @@
     "db:seed": "ts-node prisma/seed.ts",
     "db:migrate": "prisma migrate dev",
     "gen": "prisma generate",
-    "gen:watch": "prisma generate --watch",
-    "format": "prisma format && prettier --write \"prisma/**/*.(t|j)s*\""
+    "gen:watch": "prisma generate --watch"
   },
   "devDependencies": {
     "@ngneat/falso": "^4.0.0",
