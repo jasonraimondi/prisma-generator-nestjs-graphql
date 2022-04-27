@@ -47,7 +47,7 @@ generatorHandler({
 
     const globPath = writePath(`/`);
     const files = (await fs.readdir(globPath)).map(name => name.replace(".ts", ""));
-    const exports = files.map(file => `export * from "./${file}";`).join("\n");
+    const exports = files.filter(file => file !== "index").map(file => `export * from "./${file}";`).join("\n");
     await writeFileSafely(globPath + "index.ts", exports);
   },
 });
