@@ -5,26 +5,20 @@
 
 import { Field, InputType, ID } from "@nestjs/graphql";
 
-import { PermissionConstructor } from "./Permission.model";
+import { DefaultIntConstructor } from "./DefaultInt.model";
 import { PaginatorInputs } from "./paginator";
 
 @InputType()
-export class PermissionCreateInput implements PermissionConstructor {
+export class DefaultIntCreateInput implements DefaultIntConstructor {
   @Field(() => ID, { nullable: true })
   id?: number;
-
-  @Field(() => String!, { nullable: false })
-  name!: string;
 }
 
 @InputType()
-export class PermissionUpdateInput {
+export class DefaultIntUpdateInput {
   @Field(() => ID!, { nullable: false })
   id!: number;
-
-  @Field(() => String, { nullable: true })
-  name?: string;
 }
 
 @InputType()
-export class PermissionPaginatorInput extends PaginatorInputs {}
+export class DefaultIntPaginatorInput extends PaginatorInputs {}

@@ -12,8 +12,8 @@ import { PaginatorInputs } from "./paginator";
 export class ForgotPasswordTokenCreateInput
   implements ForgotPasswordTokenConstructor
 {
-  @Field(() => ID, { nullable: false })
-  id!: string;
+  @Field(() => ID, { nullable: true })
+  id?: string;
 
   @Field(() => Date!, { nullable: false })
   expiresAt!: Date;

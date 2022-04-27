@@ -129,3 +129,19 @@ model UserRole {
 
   @@id([userId, roleId])
 }
+
+model NoDefaultUUID {
+  id                     String                  @id @db.Uuid
+}
+
+model DefaultUUID {
+  id                     String                  @id @default(uuid()) @db.Uuid
+}
+
+model NoDefaultInt {
+  id              Int              @id
+}
+
+model DefaultInt {
+  id              Int              @id @default(autoincrement())
+}

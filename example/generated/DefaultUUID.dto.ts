@@ -5,26 +5,20 @@
 
 import { Field, InputType, ID } from "@nestjs/graphql";
 
-import { RoleConstructor } from "./Role.model";
+import { DefaultUUIDConstructor } from "./DefaultUUID.model";
 import { PaginatorInputs } from "./paginator";
 
 @InputType()
-export class RoleCreateInput implements RoleConstructor {
+export class DefaultUUIDCreateInput implements DefaultUUIDConstructor {
   @Field(() => ID, { nullable: true })
-  id?: number;
-
-  @Field(() => String!, { nullable: false })
-  name!: string;
+  id?: string;
 }
 
 @InputType()
-export class RoleUpdateInput {
+export class DefaultUUIDUpdateInput {
   @Field(() => ID!, { nullable: false })
-  id!: number;
-
-  @Field(() => String, { nullable: true })
-  name?: string;
+  id!: string;
 }
 
 @InputType()
-export class RolePaginatorInput extends PaginatorInputs {}
+export class DefaultUUIDPaginatorInput extends PaginatorInputs {}

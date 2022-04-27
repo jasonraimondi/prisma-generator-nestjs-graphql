@@ -12,8 +12,8 @@ import { PaginatorInputs } from "./paginator";
 export class EmailConfirmationTokenCreateInput
   implements EmailConfirmationTokenConstructor
 {
-  @Field(() => ID, { nullable: false })
-  id!: string;
+  @Field(() => ID, { nullable: true })
+  id?: string;
 
   @Field(() => Date!, { nullable: false })
   expiresAt!: Date;

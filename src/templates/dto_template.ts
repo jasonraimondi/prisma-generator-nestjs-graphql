@@ -29,7 +29,7 @@ export function generateDtoTemplate(clientPath: string, model: DMMF.Model) {
     if (skip) return "";
 
     if (field.isId) {
-      const required = field.isRequired;
+      const required = field.isRequired && !field.hasDefaultValue;
       // @ts-ignore
       return `
           ${validationBlocks(field.documentation)}
