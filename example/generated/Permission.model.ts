@@ -6,9 +6,10 @@
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 
 import { Permission as PrismaPermission } from "@prisma/client";
-
 import { BaseRolePermission } from "./RolePermission.model";
 import { BaseUserPermission } from "./UserPermission.model";
+
+export { PrismaPermission };
 
 export type PermissionConstructor = {
   id?: number | null;
@@ -38,11 +39,11 @@ export class BasePermission implements PrismaPermission {
     this.userPermissions = model.userPermissions ?? null;
   }
 
-  static fromHash(hash: PrismaPermission): BasePermission {
+  static fromPrisma(hash: PrismaPermission): BasePermission {
     return new BasePermission(hash);
   }
 
-  toHash(): PrismaPermission {
+  toPrisma(): PrismaPermission {
     const { rolePermissions, userPermissions, ...entity } = this;
     return entity;
   }

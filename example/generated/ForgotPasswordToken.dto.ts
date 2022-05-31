@@ -32,4 +32,16 @@ export class ForgotPasswordTokenUpdateInput {
 }
 
 @InputType()
+export class ForgotPasswordTokenWhereInput {
+  @Field(() => ID, { nullable: true })
+  id?: string;
+
+  @Field(() => Date, { nullable: true })
+  expiresAt?: Date;
+
+  @Field(() => String, { nullable: true })
+  userId?: string;
+}
+
+@InputType()
 export class ForgotPasswordTokenPaginatorInput extends PaginatorInputs {}

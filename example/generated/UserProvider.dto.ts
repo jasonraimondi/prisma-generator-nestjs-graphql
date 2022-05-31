@@ -22,4 +22,10 @@ export class UserProviderCreateInput implements UserProviderConstructor {
 export class UserProviderUpdateInput {}
 
 @InputType()
+export class UserProviderWhereInput {
+  @Field(() => String, { nullable: true })
+  userId?: string;
+}
+
+@InputType()
 export class UserProviderPaginatorInput extends PaginatorInputs {}

@@ -9,12 +9,13 @@ import { IsEmail, IsDate, MaxDate, IsIP } from "class-validator";
 import { ObjectType, Field, ID, HideField } from "@nestjs/graphql";
 
 import { User as PrismaUser } from "@prisma/client";
-
 import { BaseEmailConfirmationToken } from "./EmailConfirmationToken.model";
 import { BaseForgotPasswordToken } from "./ForgotPasswordToken.model";
 import { BaseUserProvider } from "./UserProvider.model";
 import { BaseUserPermission } from "./UserPermission.model";
 import { BaseUserRole } from "./UserRole.model";
+
+export { PrismaUser };
 
 export type UserConstructor = {
   id?: string | null;
@@ -123,11 +124,11 @@ export class BaseUser implements PrismaUser {
     this.roles = model.roles ?? null;
   }
 
-  static fromHash(hash: PrismaUser): BaseUser {
+  static fromPrisma(hash: PrismaUser): BaseUser {
     return new BaseUser(hash);
   }
 
-  toHash(): PrismaUser {
+  toPrisma(): PrismaUser {
     const {
       emailConfirmationToken,
       forgotPasswordToken,

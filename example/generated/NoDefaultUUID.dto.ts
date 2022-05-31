@@ -21,4 +21,10 @@ export class NoDefaultUUIDUpdateInput {
 }
 
 @InputType()
+export class NoDefaultUUIDWhereInput {
+  @Field(() => ID, { nullable: true })
+  id?: string;
+}
+
+@InputType()
 export class NoDefaultUUIDPaginatorInput extends PaginatorInputs {}

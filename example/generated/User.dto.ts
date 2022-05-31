@@ -80,4 +80,31 @@ export class UserUpdateInput {
 }
 
 @InputType()
+export class UserWhereInput {
+  @Field(() => ID, { nullable: true })
+  id?: string;
+
+  @Field(() => String, { nullable: true })
+  email?: string;
+
+  @Field(() => Boolean, { nullable: true })
+  isEmailConfirmed?: boolean;
+
+  @Field(() => String, { nullable: true })
+  firstName?: string;
+
+  @Field(() => String, { nullable: true })
+  lastName?: string;
+
+  @Field(() => Date, { nullable: true })
+  lastHeartbeatAt?: Date;
+
+  @Field(() => Date, { nullable: true })
+  lastLoginAt?: Date;
+
+  @Field(() => String, { nullable: true })
+  lastLoginIP?: string;
+}
+
+@InputType()
 export class UserPaginatorInput extends PaginatorInputs {}

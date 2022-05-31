@@ -27,4 +27,13 @@ export class RoleUpdateInput {
 }
 
 @InputType()
+export class RoleWhereInput {
+  @Field(() => ID, { nullable: true })
+  id?: number;
+
+  @Field(() => String, { nullable: true })
+  name?: string;
+}
+
+@InputType()
 export class RolePaginatorInput extends PaginatorInputs {}

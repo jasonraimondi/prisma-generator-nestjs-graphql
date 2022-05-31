@@ -21,4 +21,10 @@ export class DefaultIntUpdateInput {
 }
 
 @InputType()
+export class DefaultIntWhereInput {
+  @Field(() => ID, { nullable: true })
+  id?: number;
+}
+
+@InputType()
 export class DefaultIntPaginatorInput extends PaginatorInputs {}

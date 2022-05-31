@@ -32,4 +32,16 @@ export class EmailConfirmationTokenUpdateInput {
 }
 
 @InputType()
+export class EmailConfirmationTokenWhereInput {
+  @Field(() => ID, { nullable: true })
+  id?: string;
+
+  @Field(() => Date, { nullable: true })
+  expiresAt?: Date;
+
+  @Field(() => String, { nullable: true })
+  userId?: string;
+}
+
+@InputType()
 export class EmailConfirmationTokenPaginatorInput extends PaginatorInputs {}

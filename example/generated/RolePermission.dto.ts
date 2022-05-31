@@ -21,4 +21,13 @@ export class RolePermissionCreateInput implements RolePermissionConstructor {
 export class RolePermissionUpdateInput {}
 
 @InputType()
+export class RolePermissionWhereInput {
+  @Field(() => Int, { nullable: true })
+  permissionId?: number;
+
+  @Field(() => Int, { nullable: true })
+  roleId?: number;
+}
+
+@InputType()
 export class RolePermissionPaginatorInput extends PaginatorInputs {}

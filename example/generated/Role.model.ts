@@ -6,10 +6,11 @@
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 
 import { Role as PrismaRole } from "@prisma/client";
-
 import { BaseRolePermission } from "./RolePermission.model";
 import { BaseUserPermission } from "./UserPermission.model";
 import { BaseUserRole } from "./UserRole.model";
+
+export { PrismaRole };
 
 export type RoleConstructor = {
   id?: number | null;
@@ -44,11 +45,11 @@ export class BaseRole implements PrismaRole {
     this.userRole = model.userRole ?? null;
   }
 
-  static fromHash(hash: PrismaRole): BaseRole {
+  static fromPrisma(hash: PrismaRole): BaseRole {
     return new BaseRole(hash);
   }
 
-  toHash(): PrismaRole {
+  toPrisma(): PrismaRole {
     const { rolePermissions, userPermissions, userRole, ...entity } = this;
     return entity;
   }

@@ -8,8 +8,9 @@ import { v4 } from "uuid";
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 
 import { EmailConfirmationToken as PrismaEmailConfirmationToken } from "@prisma/client";
-
 import { BaseUser } from "./User.model";
+
+export { PrismaEmailConfirmationToken };
 
 export type EmailConfirmationTokenConstructor = {
   id?: string | null;
@@ -46,13 +47,13 @@ export class BaseEmailConfirmationToken
     this.user = model.user ?? null;
   }
 
-  static fromHash(
+  static fromPrisma(
     hash: PrismaEmailConfirmationToken
   ): BaseEmailConfirmationToken {
     return new BaseEmailConfirmationToken(hash);
   }
 
-  toHash(): PrismaEmailConfirmationToken {
+  toPrisma(): PrismaEmailConfirmationToken {
     const { user, ...entity } = this;
     return entity;
   }

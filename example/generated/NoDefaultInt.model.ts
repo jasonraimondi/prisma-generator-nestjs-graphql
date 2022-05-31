@@ -7,6 +7,8 @@ import { ObjectType, Field, ID } from "@nestjs/graphql";
 
 import { NoDefaultInt as PrismaNoDefaultInt } from "@prisma/client";
 
+export { PrismaNoDefaultInt };
+
 export type NoDefaultIntConstructor = {
   id: number;
 };
@@ -20,11 +22,11 @@ export class BaseNoDefaultInt implements PrismaNoDefaultInt {
     this.id = model.id;
   }
 
-  static fromHash(hash: PrismaNoDefaultInt): BaseNoDefaultInt {
+  static fromPrisma(hash: PrismaNoDefaultInt): BaseNoDefaultInt {
     return new BaseNoDefaultInt(hash);
   }
 
-  toHash(): PrismaNoDefaultInt {
+  toPrisma(): PrismaNoDefaultInt {
     const { ...entity } = this;
     return entity;
   }

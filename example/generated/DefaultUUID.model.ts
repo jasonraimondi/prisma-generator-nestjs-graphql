@@ -9,6 +9,8 @@ import { ObjectType, Field, ID } from "@nestjs/graphql";
 
 import { DefaultUUID as PrismaDefaultUUID } from "@prisma/client";
 
+export { PrismaDefaultUUID };
+
 export type DefaultUUIDConstructor = {
   id?: string | null;
 };
@@ -22,11 +24,11 @@ export class BaseDefaultUUID implements PrismaDefaultUUID {
     this.id = model.id ?? v4();
   }
 
-  static fromHash(hash: PrismaDefaultUUID): BaseDefaultUUID {
+  static fromPrisma(hash: PrismaDefaultUUID): BaseDefaultUUID {
     return new BaseDefaultUUID(hash);
   }
 
-  toHash(): PrismaDefaultUUID {
+  toPrisma(): PrismaDefaultUUID {
     const { ...entity } = this;
     return entity;
   }

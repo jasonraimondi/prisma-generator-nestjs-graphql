@@ -21,4 +21,13 @@ export class UserRoleCreateInput implements UserRoleConstructor {
 export class UserRoleUpdateInput {}
 
 @InputType()
+export class UserRoleWhereInput {
+  @Field(() => Int, { nullable: true })
+  roleId?: number;
+
+  @Field(() => String, { nullable: true })
+  userId?: string;
+}
+
+@InputType()
 export class UserRolePaginatorInput extends PaginatorInputs {}

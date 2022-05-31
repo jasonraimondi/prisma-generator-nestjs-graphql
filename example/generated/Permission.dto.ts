@@ -27,4 +27,13 @@ export class PermissionUpdateInput {
 }
 
 @InputType()
+export class PermissionWhereInput {
+  @Field(() => ID, { nullable: true })
+  id?: number;
+
+  @Field(() => String, { nullable: true })
+  name?: string;
+}
+
+@InputType()
 export class PermissionPaginatorInput extends PaginatorInputs {}

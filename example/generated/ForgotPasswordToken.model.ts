@@ -8,8 +8,9 @@ import { v4 } from "uuid";
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 
 import { ForgotPasswordToken as PrismaForgotPasswordToken } from "@prisma/client";
-
 import { BaseUser } from "./User.model";
+
+export { PrismaForgotPasswordToken };
 
 export type ForgotPasswordTokenConstructor = {
   id?: string | null;
@@ -44,11 +45,11 @@ export class BaseForgotPasswordToken implements PrismaForgotPasswordToken {
     this.user = model.user ?? null;
   }
 
-  static fromHash(hash: PrismaForgotPasswordToken): BaseForgotPasswordToken {
+  static fromPrisma(hash: PrismaForgotPasswordToken): BaseForgotPasswordToken {
     return new BaseForgotPasswordToken(hash);
   }
 
-  toHash(): PrismaForgotPasswordToken {
+  toPrisma(): PrismaForgotPasswordToken {
     const { user, ...entity } = this;
     return entity;
   }

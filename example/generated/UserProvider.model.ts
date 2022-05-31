@@ -6,8 +6,9 @@
 import { ObjectType, Field, HideField } from "@nestjs/graphql";
 
 import { UserProvider as PrismaUserProvider, Provider } from "@prisma/client";
-
 import { BaseUser } from "./User.model";
+
+export { PrismaUserProvider };
 
 export type UserProviderConstructor = {
   provider: keyof typeof Provider;
@@ -32,11 +33,11 @@ export class BaseUserProvider implements PrismaUserProvider {
     this.user = model.user ?? null;
   }
 
-  static fromHash(hash: PrismaUserProvider): BaseUserProvider {
+  static fromPrisma(hash: PrismaUserProvider): BaseUserProvider {
     return new BaseUserProvider(hash);
   }
 
-  toHash(): PrismaUserProvider {
+  toPrisma(): PrismaUserProvider {
     const { user, ...entity } = this;
     return entity;
   }
