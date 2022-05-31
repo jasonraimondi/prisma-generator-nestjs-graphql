@@ -165,11 +165,11 @@ export class BaseUser implements PrismaUser {
     this.roles = model.roles ?? null;
   }
 
-  static fromHash(hash: PrismaUser): BaseUser {
+  static fromPrisma(hash: PrismaUser): BaseUser {
     return new BaseUser(hash);
   }
 
-  toHash(): PrismaUser {
+  toPrisma(): PrismaUser {
     const {
       emailConfirmationToken,
       forgotPasswordToken,

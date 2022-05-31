@@ -1,6 +1,6 @@
 import { DMMF } from "@prisma/generator-helper";
 import {
-  addRelatedModelImports,
+  importRelations,
   graphqlType,
   shouldHide,
   isRequired,
@@ -55,6 +55,13 @@ ${field.name}${field.isId ? "!" : "?"}: ${type(field)}
 `;
   };
 
+  const whereField = (field: DMMF.Field) => {
+    return `
+@Field(() => ${field.isId ? "ID" : graphqlType(field, true)}, { nullable: true })  
+${field.name}?: ${type(field)}
+`;
+  };
+
   const hasRelatedFields = (f: DMMF.Field) =>
     !model.fields
       .filter(f => f.relationName)
@@ -88,7 +95,7 @@ import {
   ${extraInputs(model)} 
 } from "@nestjs/graphql";
 ${addEnumImports(clientPath, model)}
-${addRelatedModelImports(model, { filterOutRelations: true })}
+${importRelations(model, { filterOutRelations: true })}
 ${importValidations(model)}
 import { ${model.name}Constructor } from "./${model.name}.model";
 import { PaginatorInputs } from "./paginator";
@@ -109,6 +116,17 @@ ${model.fields
   .filter(f => !f.isUpdatedAt)
   .filter(hasRelatedFields)
   .map(updateField)
+  .join("")}
+}
+
+@InputType()
+export class ${model.name}WhereInput {
+${model.fields
+  .filter(f => !f.relationName)
+  .filter(f => !f.isUpdatedAt)
+  .filter(f => !f.name.startsWith("created"))
+  .filter(f => !shouldHide(f.documentation))
+  .map(whereField)
   .join("")}
 }
 

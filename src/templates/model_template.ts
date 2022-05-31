@@ -22,8 +22,8 @@ export function extraNestjsGraphqlFields(model: DMMF.Model) {
     });
   return [...new Set(inputs)];
 }
-export function type(f: DMMF.Field) {
-  if (f.kind === "object") return `Base${f.type}`;
+export function type(f: DMMF.Field, prefix: "Base" | "Prisma" = "Base") {
+  if (f.kind === "object") return `${prefix}${f.type}`;
   if (f.kind === "enum") return `keyof typeof ${f.type}`;
   const map: Record<string, string> = {
     String: "string",
@@ -81,7 +81,7 @@ function getDefaultValue(field: DMMF.Field) {
   return "";
 }
 
-export function addRelatedModelImports(
+export function importRelations(
   model: DMMF.Model,
   { filterOutRelations = false }: { filterOutRelations?: boolean } = {},
 ): string {
@@ -126,8 +126,9 @@ import {
   ${model.name} as Prisma${model.name},
   ${model.fields.filter(f => f.kind == "enum").map(f => f.type)}
 } from "${clientPath}";
+${importRelations(model)}
 
-${addRelatedModelImports(model)}
+export { Prisma${model.name} };
 
 export type ${model.name}Constructor = {
   ${model.fields
@@ -139,7 +140,7 @@ export type ${model.name}Constructor = {
       // if (f.isId && isAutoIncrement) return `${f.name}: ${type(f)};`;
       if (optional) result += "?";
       result += ": ";
-      result += type(f);
+      result += type(f, "Base");
       if (f.isList) result += "[]";
       if (optional) result += ` | null`;
       return result;
@@ -163,11 +164,11 @@ export class Base${model.name} implements Prisma${model.name} {
      ${model.fields.map(f => `this.${f.name} = model.${f.name}${getDefaultValue(f)};`).join("\n")}
   }
   
-  static fromHash(hash: Prisma${model.name}): Base${model.name} {
+  static fromPrisma(hash: Prisma${model.name}): Base${model.name} {
     return new Base${model.name}(hash);
   }
   
-  toHash(): Prisma${model.name} {
+  toPrisma(): Prisma${model.name} {
     const { ${
       model.fields.filter(f => f.relationName).length
         ? model.fields
