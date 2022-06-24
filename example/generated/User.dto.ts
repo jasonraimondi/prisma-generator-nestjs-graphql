@@ -11,8 +11,8 @@ import { PaginatorInputs } from "./paginator";
 
 @InputType()
 export class UserCreateInput implements UserConstructor {
-  @Field(() => ID, { nullable: true })
-  id?: string;
+  @Field(() => ID, { nullable: false })
+  id!: string;
 
   @IsEmail()
   @Field(() => String!, { nullable: false })

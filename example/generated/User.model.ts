@@ -3,7 +3,6 @@
 // THIS FILE WAS AUTO GENERATED.
 /////////////////////////////////////
 
-import { v4 } from "uuid";
 import { IsEmail, IsDate, MaxDate, IsIP } from "class-validator";
 
 import { ObjectType, Field, ID, HideField } from "@nestjs/graphql";
@@ -18,7 +17,7 @@ import { BaseUserRole } from "./UserRole.model";
 export { PrismaUser };
 
 export type UserConstructor = {
-  id?: string | null;
+  id: string;
   email: string;
   passwordHash?: string | null;
   tokenVersion?: number | null;
@@ -104,7 +103,7 @@ export class BaseUser implements PrismaUser {
   roles: null | BaseUserRole[];
 
   constructor(model: UserConstructor) {
-    this.id = model.id ?? v4();
+    this.id = model.id;
     this.email = model.email;
     this.passwordHash = model.passwordHash ?? null;
     this.tokenVersion = model.tokenVersion ?? 0;

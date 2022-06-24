@@ -21,7 +21,7 @@ export class BaseDefaultUUID implements PrismaDefaultUUID {
   readonly id: string;
 
   constructor(model: DefaultUUIDConstructor) {
-    this.id = model.id ?? v4();
+    this.id = model.id ?? uuid();
   }
 
   static fromPrisma(hash: PrismaDefaultUUID): BaseDefaultUUID {

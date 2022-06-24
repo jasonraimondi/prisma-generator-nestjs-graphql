@@ -3,8 +3,6 @@
 // THIS FILE WAS AUTO GENERATED.
 /////////////////////////////////////
 
-import { v4 } from "uuid";
-
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 
 import { ForgotPasswordToken as PrismaForgotPasswordToken } from "@prisma/client";
@@ -13,7 +11,7 @@ import { BaseUser } from "./User.model";
 export { PrismaForgotPasswordToken };
 
 export type ForgotPasswordTokenConstructor = {
-  id?: string | null;
+  id: string;
   expiresAt: Date;
   createdAt?: Date | null;
   userId: string;
@@ -38,7 +36,7 @@ export class BaseForgotPasswordToken implements PrismaForgotPasswordToken {
   user: null | BaseUser;
 
   constructor(model: ForgotPasswordTokenConstructor) {
-    this.id = model.id ?? v4();
+    this.id = model.id;
     this.expiresAt = model.expiresAt;
     this.createdAt = model.createdAt ?? new Date();
     this.userId = model.userId;

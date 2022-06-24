@@ -1,3 +1,5 @@
+export * from "./CUID.dto";
+export * from "./CUID.model";
 export * from "./DefaultInt.dto";
 export * from "./DefaultInt.model";
 export * from "./DefaultUUID.dto";

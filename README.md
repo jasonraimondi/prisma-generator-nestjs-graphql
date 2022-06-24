@@ -145,7 +145,7 @@ export class BaseUser implements PrismaUser {
   roles: null | BaseUserRole[];
 
   constructor(model: UserConstructor) {
-    this.id = model.id ?? v4();
+    this.id = model.id ?? cuid();
     this.email = model.email;
     this.passwordHash = model.passwordHash ?? null;
     this.tokenVersion = model.tokenVersion ?? 0;

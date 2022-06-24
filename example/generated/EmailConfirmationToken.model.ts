@@ -40,7 +40,7 @@ export class BaseEmailConfirmationToken
   user: null | BaseUser;
 
   constructor(model: EmailConfirmationTokenConstructor) {
-    this.id = model.id ?? v4();
+    this.id = model.id ?? uuid();
     this.expiresAt = model.expiresAt;
     this.createdAt = model.createdAt ?? new Date();
     this.userId = model.userId;
