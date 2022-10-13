@@ -11,7 +11,7 @@ export const needsCuidImport = (model: DMMF.Model) =>
 export const importCuid = (model: DMMF.Model) => (needsCuidImport(model) ? `import cuid from "cuid";` : "");
 export const needsUUIDv4Import = (model: DMMF.Model) =>
   model.fields.filter((f: any) => f.default?.name === "uuid").length > 0;
-export const importUUIDv4 = (model: DMMF.Model) => (needsUUIDv4Import(model) ? `import { v4 } from "uuid";` : "");
+export const importUUIDv4 = (model: DMMF.Model) => (needsUUIDv4Import(model) ? `import { v4 as uuid } from "uuid";` : "");
 
 export const modelPath = (f: DMMF.Field) => `${f.type}.model`;
 
