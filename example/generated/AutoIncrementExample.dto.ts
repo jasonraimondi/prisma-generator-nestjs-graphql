@@ -5,35 +5,28 @@
 
 import { Field, InputType, ID } from "@nestjs/graphql";
 
-import { PermissionConstructor } from "./Permission.model";
+import { AutoIncrementExampleConstructor } from "./AutoIncrementExample.model";
 import { PaginatorInputs } from "./paginator";
 
 @InputType()
-export class PermissionCreateInput implements PermissionConstructor {
+export class AutoIncrementExampleCreateInput
+  implements AutoIncrementExampleConstructor
+{
   @Field(() => ID, { nullable: true })
   id?: number;
-
-  @Field(() => String!, { nullable: false })
-  name!: string;
 }
 
 @InputType()
-export class PermissionUpdateInput {
+export class AutoIncrementExampleUpdateInput {
   @Field(() => ID!, { nullable: false })
   id!: number;
-
-  @Field(() => String, { nullable: true })
-  name?: string;
 }
 
 @InputType()
-export class PermissionWhereInput {
+export class AutoIncrementExampleWhereInput {
   @Field(() => ID, { nullable: true })
   id?: number;
-
-  @Field(() => String, { nullable: true })
-  name?: string;
 }
 
 @InputType()
-export class PermissionPaginatorInput extends PaginatorInputs {}
+export class AutoIncrementExamplePaginatorInput extends PaginatorInputs {}

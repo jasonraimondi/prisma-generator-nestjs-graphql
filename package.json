@@ -16,7 +16,7 @@
     "@prisma/sdk": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "^18.8.5",
+    "@types/node": "^18.11.0",
     "@types/prettier": "^2.7.1",
     "prettier": "^2.7.1",
     "prisma": "^4.4.0",

@@ -3,16 +3,14 @@
 // THIS FILE WAS AUTO GENERATED.
 /////////////////////////////////////
 
+import { v4 as uuid } from "uuid";
+
 import { IsEmail, IsDate, MaxDate, IsIP } from "class-validator";
 
 import { ObjectType, Field, ID, HideField } from "@nestjs/graphql";
 
 import { User as PrismaUser } from "@prisma/client";
-import { BaseEmailConfirmationToken } from "./EmailConfirmationToken.model";
-import { BaseForgotPasswordToken } from "./ForgotPasswordToken.model";
-import { BaseUserProvider } from "./UserProvider.model";
-import { BaseUserPermission } from "./UserPermission.model";
-import { BaseUserRole } from "./UserRole.model";
+import { BasePost } from "./Post.model";
 
 export { PrismaUser };
 
@@ -21,20 +19,11 @@ export type UserConstructor = {
   email: string;
   passwordHash?: string | null;
   tokenVersion?: number | null;
-  isEmailConfirmed?: boolean | null;
-  firstName?: string | null;
-  lastName?: string | null;
-  lastHeartbeatAt?: Date | null;
   lastLoginAt?: Date | null;
-  lastLoginIP?: string | null;
   createdIP: string;
   createdAt?: Date | null;
   updatedAt?: Date | null;
-  emailConfirmationToken?: BaseEmailConfirmationToken | null;
-  forgotPasswordToken?: BaseForgotPasswordToken | null;
-  providers?: BaseUserProvider[] | null;
-  permissions?: BaseUserPermission[] | null;
-  roles?: BaseUserRole[] | null;
+  posts?: BasePost[] | null;
 };
 
 @ObjectType({ isAbstract: true })
@@ -52,28 +41,10 @@ export class BaseUser implements PrismaUser {
   @HideField()
   tokenVersion: number;
 
-  @Field(() => Boolean!, { nullable: false })
-  isEmailConfirmed: boolean;
-
-  @Field(() => String, { nullable: true })
-  firstName: null | string;
-
-  @Field(() => String, { nullable: true })
-  lastName: null | string;
-
-  @IsDate()
-  @MaxDate(new Date())
-  @Field(() => Date, { nullable: true })
-  lastHeartbeatAt: null | Date;
-
   @IsDate()
   @MaxDate(new Date())
   @Field(() => Date, { nullable: true })
   lastLoginAt: null | Date;
-
-  @IsIP()
-  @Field(() => String, { nullable: true })
-  lastLoginIP: null | string;
 
   @IsIP()
   @Field(() => String!, { nullable: false })
@@ -87,40 +58,19 @@ export class BaseUser implements PrismaUser {
   @Field(() => Date, { nullable: true })
   updatedAt: null | Date;
 
-  @Field(() => BaseEmailConfirmationToken, { nullable: true })
-  emailConfirmationToken: null | BaseEmailConfirmationToken;
-
-  @Field(() => BaseForgotPasswordToken, { nullable: true })
-  forgotPasswordToken: null | BaseForgotPasswordToken;
-
-  @HideField()
-  providers: null | BaseUserProvider[];
-
-  @HideField()
-  permissions: null | BaseUserPermission[];
-
-  @HideField()
-  roles: null | BaseUserRole[];
+  @Field(() => [BasePost], { nullable: true })
+  posts: null | BasePost[];
 
   constructor(model: UserConstructor) {
-    this.id = model.id;
+    this.id = model.id ?? uuid();
     this.email = model.email;
     this.passwordHash = model.passwordHash ?? null;
     this.tokenVersion = model.tokenVersion ?? 0;
-    this.isEmailConfirmed = model.isEmailConfirmed ?? false;
-    this.firstName = model.firstName ?? null;
-    this.lastName = model.lastName ?? null;
-    this.lastHeartbeatAt = model.lastHeartbeatAt ?? null;
     this.lastLoginAt = model.lastLoginAt ?? null;
-    this.lastLoginIP = model.lastLoginIP ?? null;
     this.createdIP = model.createdIP;
     this.createdAt = model.createdAt ?? new Date();
     this.updatedAt = model.updatedAt ?? null;
-    this.emailConfirmationToken = model.emailConfirmationToken ?? null;
-    this.forgotPasswordToken = model.forgotPasswordToken ?? null;
-    this.providers = model.providers ?? null;
-    this.permissions = model.permissions ?? null;
-    this.roles = model.roles ?? null;
+    this.posts = model.posts ?? null;
   }
 
   static fromPrisma(hash: PrismaUser): BaseUser {
@@ -128,14 +78,7 @@ export class BaseUser implements PrismaUser {
   }
 
   toPrisma(): PrismaUser {
-    const {
-      emailConfirmationToken,
-      forgotPasswordToken,
-      providers,
-      permissions,
-      roles,
-      ...entity
-    } = this;
+    const { posts, ...entity } = this;
     return entity;
   }
 }

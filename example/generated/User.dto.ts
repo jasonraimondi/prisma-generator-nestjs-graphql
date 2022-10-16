@@ -11,8 +11,8 @@ import { PaginatorInputs } from "./paginator";
 
 @InputType()
 export class UserCreateInput implements UserConstructor {
-  @Field(() => ID, { nullable: false })
-  id!: string;
+  @Field(() => ID, { nullable: true })
+  id?: string;
 
   @IsEmail()
   @Field(() => String!, { nullable: false })
@@ -24,28 +24,10 @@ export class UserCreateInput implements UserConstructor {
   @Field(() => Int!, { nullable: false })
   tokenVersion!: number;
 
-  @Field(() => Boolean!, { nullable: false })
-  isEmailConfirmed!: boolean;
-
-  @Field(() => String, { nullable: true })
-  firstName?: string;
-
-  @Field(() => String, { nullable: true })
-  lastName?: string;
-
-  @IsDate()
-  @MaxDate(new Date())
-  @Field(() => Date, { nullable: true })
-  lastHeartbeatAt?: Date;
-
   @IsDate()
   @MaxDate(new Date())
   @Field(() => Date, { nullable: true })
   lastLoginAt?: Date;
-
-  @IsIP()
-  @Field(() => String, { nullable: true })
-  lastLoginIP?: string;
 
   @IsIP()
   @Field(() => String!, { nullable: false })
@@ -60,23 +42,8 @@ export class UserUpdateInput {
   @Field(() => String, { nullable: true })
   email?: string;
 
-  @Field(() => Boolean, { nullable: true })
-  isEmailConfirmed?: boolean;
-
-  @Field(() => String, { nullable: true })
-  firstName?: string;
-
-  @Field(() => String, { nullable: true })
-  lastName?: string;
-
-  @Field(() => Date, { nullable: true })
-  lastHeartbeatAt?: Date;
-
   @Field(() => Date, { nullable: true })
   lastLoginAt?: Date;
-
-  @Field(() => String, { nullable: true })
-  lastLoginIP?: string;
 }
 
 @InputType()
@@ -87,23 +54,8 @@ export class UserWhereInput {
   @Field(() => String, { nullable: true })
   email?: string;
 
-  @Field(() => Boolean, { nullable: true })
-  isEmailConfirmed?: boolean;
-
-  @Field(() => String, { nullable: true })
-  firstName?: string;
-
-  @Field(() => String, { nullable: true })
-  lastName?: string;
-
-  @Field(() => Date, { nullable: true })
-  lastHeartbeatAt?: Date;
-
   @Field(() => Date, { nullable: true })
   lastLoginAt?: Date;
-
-  @Field(() => String, { nullable: true })
-  lastLoginIP?: string;
 }
 
 @InputType()

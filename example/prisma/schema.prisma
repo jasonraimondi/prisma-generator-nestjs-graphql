@@ -14,138 +14,61 @@ generator client {
 }
 
 model User {
-  id                     String                  @id
+  id           String    @id @default(uuid()) @db.Uuid
   /// @Validate.IsEmail()
-  email                  String                  @unique @db.VarChar(255)
+  email        String    @unique @db.VarChar(255)
   /// @HideField()
-  passwordHash           String?                 @db.VarChar(255)
+  passwordHash String?   @db.VarChar(255)
   /// @HideField()
-  tokenVersion           Int                     @default(0)
-  isEmailConfirmed       Boolean                 @default(false)
-  firstName              String?                 @db.VarChar(255)
-  lastName               String?                 @db.VarChar(255)
+  tokenVersion Int       @default(0)
   /// @Validate.IsDate() @Validate.MaxDate(new Date())
-  lastHeartbeatAt        DateTime?               @db.Timestamp(6)
-  /// @Validate.IsDate() @Validate.MaxDate(new Date())
-  lastLoginAt            DateTime?               @db.Timestamp(6)
+  lastLoginAt  DateTime? @db.Timestamp(6)
   /// @Validate.IsIP()
-  lastLoginIP            String?                 @db.Inet
-  /// @Validate.IsIP()
-  createdIP              String                  @db.Inet
+  createdIP    String    @db.Inet
   /// @Validate.IsDate() @Validate.MaxDate(new Date())
-  createdAt              DateTime                @default(now()) @db.Timestamp(6)
-  updatedAt              DateTime?               @updatedAt
-  emailConfirmationToken EmailConfirmationToken?
-  forgotPasswordToken    ForgotPasswordToken?
-  /// @HideField()
-  providers              UserProvider[]
-  /// @HideField()
-  permissions            UserPermission[]
-  /// @HideField()
-  roles                  UserRole[]
+  createdAt    DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime? @updatedAt
+  posts        Post[]
 
   @@index([email])
 }
 
-enum Provider {
-  facebook
-  github
-  google
+enum Category {
+  fun
+  boring
+  misc
 }
 
-model UserProvider {
-  /// @HideField()
-  provider Provider
+model Post {
+  id       String   @id @default(uuid()) @db.Uuid
+  category Category
+  body     String
   userId   String
   user     User     @relation(fields: [userId], references: [id])
 
-  @@id([provider, userId])
   @@index([userId])
 }
 
-model EmailConfirmationToken {
-  id        String   @id @default(uuid()) @db.Uuid
-  expiresAt DateTime @db.Timestamp(6)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  userId    String   @unique @db.Uuid
-  user      User     @relation(fields: [userId], references: [id])
-
-  @@index([userId])
-}
-
-model ForgotPasswordToken {
-  id        String   @id
-  expiresAt DateTime @db.Timestamp(6)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id])
-
-  @@index([userId])
-}
-
-model Role {
-  id              Int              @id @default(autoincrement())
-  name            String           @unique @db.VarChar
-  rolePermissions RolePermission[]
-  userPermissions UserPermission[]
-  userRole        UserRole[]
-}
-
-model Permission {
-  id              Int              @id @default(autoincrement())
-  name            String           @unique @db.VarChar
-  rolePermissions RolePermission[]
-  userPermissions UserPermission[]
-}
-
-model RolePermission {
-  permissionId Int
-  roleId       Int
-  createdAt    DateTime   @default(now()) @db.Timestamp(6)
-  permission   Permission @relation(fields: [permissionId], references: [id])
-  role         Role       @relation(fields: [roleId], references: [id])
-
-  @@id([roleId, permissionId])
-}
-
-model UserPermission {
-  permissionId Int
-  userId       String
-  createdAt    DateTime   @default(now()) @db.Timestamp(6)
-  roleId       Int?
-  permission   Permission @relation(fields: [permissionId], references: [id])
-  role         Role?      @relation(fields: [roleId], references: [id])
-  user         User       @relation(fields: [userId], references: [id])
-
-  @@id([userId, permissionId])
-}
-
-model UserRole {
-  roleId    Int
-  userId    String
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  role      Role     @relation(fields: [roleId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
-
-  @@id([userId, roleId])
-}
-
-model NoDefaultUUID {
-  id String @id @db.Uuid
-}
-
-model DefaultUUID {
-  id String @id @default(uuid()) @db.Uuid
-}
-
-model CUID {
+model StringExample {
   id String @id
 }
 
-model NoDefaultInt {
+model IntExample {
   id Int @id
 }
 
-model DefaultInt {
+model AutoIncrementExample {
   id Int @id @default(autoincrement())
+}
+
+model UuidRequiredExample {
+  id String @id @db.Uuid
+}
+
+model UuidExample {
+  id String @id @default(uuid()) @db.Uuid
+}
+
+model CuidExample {
+  id String @id @default(cuid())
 }

@@ -5,28 +5,28 @@
 
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 
-import { CUID as PrismaCUID } from "@prisma/client";
+import { StringExample as PrismaStringExample } from "@prisma/client";
 
-export { PrismaCUID };
+export { PrismaStringExample };
 
-export type CUIDConstructor = {
+export type StringExampleConstructor = {
   id: string;
 };
 
 @ObjectType({ isAbstract: true })
-export class BaseCUID implements PrismaCUID {
+export class BaseStringExample implements PrismaStringExample {
   @Field(() => ID, { nullable: false })
   readonly id: string;
 
-  constructor(model: CUIDConstructor) {
+  constructor(model: StringExampleConstructor) {
     this.id = model.id;
   }
 
-  static fromPrisma(hash: PrismaCUID): BaseCUID {
-    return new BaseCUID(hash);
+  static fromPrisma(hash: PrismaStringExample): BaseStringExample {
+    return new BaseStringExample(hash);
   }
 
-  toPrisma(): PrismaCUID {
+  toPrisma(): PrismaStringExample {
     const { ...entity } = this;
     return entity;
   }

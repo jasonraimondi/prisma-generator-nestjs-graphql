@@ -5,28 +5,28 @@
 
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 
-import { NoDefaultInt as PrismaNoDefaultInt } from "@prisma/client";
+import { IntExample as PrismaIntExample } from "@prisma/client";
 
-export { PrismaNoDefaultInt };
+export { PrismaIntExample };
 
-export type NoDefaultIntConstructor = {
+export type IntExampleConstructor = {
   id: number;
 };
 
 @ObjectType({ isAbstract: true })
-export class BaseNoDefaultInt implements PrismaNoDefaultInt {
+export class BaseIntExample implements PrismaIntExample {
   @Field(() => ID, { nullable: false })
   readonly id: number;
 
-  constructor(model: NoDefaultIntConstructor) {
+  constructor(model: IntExampleConstructor) {
     this.id = model.id;
   }
 
-  static fromPrisma(hash: PrismaNoDefaultInt): BaseNoDefaultInt {
-    return new BaseNoDefaultInt(hash);
+  static fromPrisma(hash: PrismaIntExample): BaseIntExample {
+    return new BaseIntExample(hash);
   }
 
-  toPrisma(): PrismaNoDefaultInt {
+  toPrisma(): PrismaIntExample {
     const { ...entity } = this;
     return entity;
   }

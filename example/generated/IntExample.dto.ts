@@ -5,26 +5,26 @@
 
 import { Field, InputType, ID } from "@nestjs/graphql";
 
-import { CUIDConstructor } from "./CUID.model";
+import { IntExampleConstructor } from "./IntExample.model";
 import { PaginatorInputs } from "./paginator";
 
 @InputType()
-export class CUIDCreateInput implements CUIDConstructor {
+export class IntExampleCreateInput implements IntExampleConstructor {
   @Field(() => ID, { nullable: false })
-  id!: string;
+  id!: number;
 }
 
 @InputType()
-export class CUIDUpdateInput {
+export class IntExampleUpdateInput {
   @Field(() => ID!, { nullable: false })
-  id!: string;
+  id!: number;
 }
 
 @InputType()
-export class CUIDWhereInput {
+export class IntExampleWhereInput {
   @Field(() => ID, { nullable: true })
-  id?: string;
+  id?: number;
 }
 
 @InputType()
-export class CUIDPaginatorInput extends PaginatorInputs {}
+export class IntExamplePaginatorInput extends PaginatorInputs {}

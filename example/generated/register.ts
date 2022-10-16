@@ -4,10 +4,10 @@
 /////////////////////////////////////
 
 import { registerEnumType } from "@nestjs/graphql";
-import { Provider } from "@prisma/client";
+import { Category } from "@prisma/client";
 
 export function registerEnums() {
-  registerEnumType(Provider, {
-    name: "Provider",
+  registerEnumType(Category, {
+    name: "Category",
   });
 }
