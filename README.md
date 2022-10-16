@@ -12,7 +12,7 @@ pnpm add @jmondi/prisma-generator-nestjs-graphql
 
 ```prisma
 generator custom_generator {
-  provider   = "prisma-nestjs-graphql"
+  provider   = "generate-nestjs-models"
   clientPath = "@prisma/client"
   output     = "../generated"
   prefix     = "Base"

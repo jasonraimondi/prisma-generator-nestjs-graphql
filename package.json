@@ -1,6 +1,6 @@
 {
   "name": "@jmondi/prisma-generator-nestjs-graphql",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "src/generator.ts",
   "scripts": {
     "build": "tsc",
@@ -8,7 +8,7 @@
     "prepublish": "rm -rf ./dist && pnpm build"
   },
   "bin": {
-    "generate-nestjs-models": "src/bin.ts"
+    "generate-nestjs-models": "src/generator.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
@@ -25,6 +25,9 @@
   "publishConfig": {
     "main": "dist/generator.js",
     "private": false,
-    "license": "MIT"
+    "license": "MIT",
+    "bin": {
+      "generate-nestjs-models": "dist/generator.js"
+    }
   }
 }
