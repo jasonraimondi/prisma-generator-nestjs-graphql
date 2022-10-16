@@ -12,7 +12,7 @@ import { UuidExample as PrismaUuidExample } from "@prisma/client";
 export { PrismaUuidExample };
 
 export type UuidExampleConstructor = {
-  id: string;
+  id?: string | null;
 };
 
 @ObjectType({ isAbstract: true })

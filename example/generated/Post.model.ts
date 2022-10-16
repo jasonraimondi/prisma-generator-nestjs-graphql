@@ -13,7 +13,7 @@ import { BaseUser } from "./User.model";
 export { PrismaPost };
 
 export type PostConstructor = {
-  id: string;
+  id?: string | null;
   category: keyof typeof Category;
   body: string;
   userId: string;

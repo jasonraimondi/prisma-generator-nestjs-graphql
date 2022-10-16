@@ -26,7 +26,12 @@ export function extraNestjsGraphqlFields(model: DMMF.Model) {
     });
   return [...new Set(inputs)];
 }
-export function type(f: DMMF.Field, prefix: string) {
+
+type TypeArgs = {
+  prefix: string;
+}
+
+export function type(f: DMMF.Field, { prefix }: TypeArgs) {
   if (f.kind === "object") return `${prefix}${f.type}`;
   if (f.kind === "enum") return `keyof typeof ${f.type}`;
   const map: Record<string, string> = {
@@ -104,7 +109,7 @@ export function importRelations(
   const { filterOutRelations = false, prefix } = args;
   let fields = model.fields.filter(f => f.kind == "object");
   if (filterOutRelations) fields = fields.filter(f => !f.relationName);
-  return fields.map(f => `import { ${type(f, prefix)} } from "./${modelPath(f)}";`).join("\n");
+  return fields.map(f => `import { ${type(f, { prefix })} } from "./${modelPath(f)}";`).join("\n");
 }
 
 type GraphqlFieldsArgs = {
@@ -137,7 +142,7 @@ function createClassField(field: DMMF.Field, args: CreateClassFieldArgs) {
   result += field.name;
   if (isRequired(field)) result += ":";
   else result += ": null | ";
-  result += type(field, prefix);
+  result += type(field, { prefix });
   if (field.isList) result += "[]";
 
   return result;
@@ -165,14 +170,13 @@ export { Prisma${model.name} };
 export type ${model.name}Constructor = {
   ${model.fields
     .map(f => {
-      let optional = f.isList || !f.isRequired || f.hasDefaultValue || Boolean(f.relationName);
-      if (f.isId) optional = false;
+      const optional = f.isList || !f.isRequired || f.hasDefaultValue || Boolean(f.relationName);
       let result = f.name;
       // const isAutoIncrement = f.default?.name === "autoincrement";
       // if (f.isId && isAutoIncrement) return `${f.name}: ${type(f)};`;
       if (optional) result += "?";
       result += ": ";
-      result += type(f, prefix);
+      result += type(f, { prefix });
       if (f.isList) result += "[]";
       if (optional) result += ` | null`;
       return result;

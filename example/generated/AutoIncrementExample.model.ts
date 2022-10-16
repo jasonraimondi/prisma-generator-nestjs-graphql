@@ -10,7 +10,7 @@ import { AutoIncrementExample as PrismaAutoIncrementExample } from "@prisma/clie
 export { PrismaAutoIncrementExample };
 
 export type AutoIncrementExampleConstructor = {
-  id: number;
+  id?: number | null;
 };
 
 @ObjectType({ isAbstract: true })

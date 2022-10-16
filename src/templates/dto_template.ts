@@ -41,7 +41,7 @@ export function generateDtoTemplate(args: GenerateDtoTemplateArgs, model: DMMF.M
       return `
           ${validationBlocks(field.documentation)}
           @Field(() => ID, { nullable: ${!required} })  
-          ${field.name}${required ? "!" : "?"}: ${type(field, prefix)}
+          ${field.name}${required ? "!" : "?"}: ${type(field, { prefix })}
         `;
     }
 
@@ -50,7 +50,7 @@ export function generateDtoTemplate(args: GenerateDtoTemplateArgs, model: DMMF.M
     return `
       ${validationBlocks(field.documentation)}
       @Field(() => ${graphqlType(field, { prefix })}, { nullable: ${!required} })  
-      ${field.name}${required ? "!" : "?"}: ${type(field, prefix)}
+      ${field.name}${required ? "!" : "?"}: ${type(field, { prefix })}
     `;
   };
 
@@ -61,7 +61,7 @@ export function generateDtoTemplate(args: GenerateDtoTemplateArgs, model: DMMF.M
       forceOptional: true,
       prefix,
     })}, { nullable: ${!field.isId} })  
-${field.name}${field.isId ? "!" : "?"}: ${type(field, prefix)}
+${field.name}${field.isId ? "!" : "?"}: ${type(field, { prefix })}
 `;
   };
 
@@ -71,7 +71,7 @@ ${field.name}${field.isId ? "!" : "?"}: ${type(field, prefix)}
       forceOptional: true,
       prefix,
     })}, { nullable: true })  
-${field.name}?: ${type(field, prefix)}
+${field.name}?: ${type(field, { prefix })}
 `;
   };
 

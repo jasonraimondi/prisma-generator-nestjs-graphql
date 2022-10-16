@@ -12,7 +12,7 @@ import { CuidExample as PrismaCuidExample } from "@prisma/client";
 export { PrismaCuidExample };
 
 export type CuidExampleConstructor = {
-  id: string;
+  id?: string | null;
 };
 
 @ObjectType({ isAbstract: true })

@@ -15,7 +15,7 @@ import { BasePost } from "./Post.model";
 export { PrismaUser };
 
 export type UserConstructor = {
-  id: string;
+  id?: string | null;
   email: string;
   passwordHash?: string | null;
   tokenVersion?: number | null;
