@@ -32,8 +32,10 @@ importers:
       '@ngneat/falso': ^6.1.0
       '@prisma/client': ^4.4.0
       '@types/node': ^18.11.0
+      '@types/uuid': ^8.3.4
       bcryptjs: ^2.4.3
       class-validator: 0.13.2
+      cuid: ^2.1.8
       graphql: ^16.6.0
       npm-run-all: ^4.1.5
       prettier: ^2.7.1
@@ -49,11 +51,13 @@ importers:
       '@nestjs/graphql': 10.1.3_4ui37z6k2ijplifdczfts2u5we
       '@prisma/client': 4.4.0_prisma@4.4.0
       class-validator: 0.13.2
+      cuid: 2.1.8
       prettier: 2.7.1
     devDependencies:
       '@jmondi/prisma-generator-nestjs-graphql': link:..
       '@ngneat/falso': 6.1.0
       '@types/node': 18.11.0
+      '@types/uuid': 8.3.4
       bcryptjs: 2.4.3
       graphql: 16.6.0
       npm-run-all: 4.1.5
@@ -550,6 +554,10 @@ packages:
     resolution: {integrity: sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==}
     dev: false
 
+  /@types/uuid/8.3.4:
+    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
+    dev: true
+
   /acorn-walk/8.2.0:
     resolution: {integrity: sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==}
     engines: {node: '>=0.4.0'}
@@ -911,6 +919,10 @@ packages:
   /crypto-random-string/2.0.0:
     resolution: {integrity: sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==}
     engines: {node: '>=8'}
+    dev: false
+
+  /cuid/2.1.8:
+    resolution: {integrity: sha512-xiEMER6E7TlTPnDxrM4eRiC6TRgjNX9xzEZ5U/Se2YJKr7Mq4pJn/2XEHjl3STcSh96GmkHPcBXLES8M29wyyg==}
     dev: false
 
   /debug/4.3.4:

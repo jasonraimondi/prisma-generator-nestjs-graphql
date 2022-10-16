@@ -15,17 +15,9 @@ yarn add @jmondi/prisma-generator-nestjs-graphql
 ```prisma
 generator custom_generator {
   provider   = "prisma-nestjs-graphql"
-  output     = "../generated"
-}
-```
-
-If you have a custom prisma client path
-
-```prisma
-generator custom_generator {
-  provider   = "prisma-nestjs-graphql"
-  output     = "../generated"
   clientPath = "@prisma/client"
+  output     = "../generated"
+  prefix     = "Base"
 }
 ```
 
@@ -34,8 +26,46 @@ You can also run the generator directly
 ```prisma
 generator custom_generator {
   provider   = "ts-node node_modules/@jmondi/prisma-generator-nestjs-graphql/src/generator.ts"
-  output     = "../generated"
+  ...
 }
 ```
 
 See the [generated examples](example/generated) for sample output.
+
+## Why?
+
+The special sauce here is the [type-safe constructors](https://github.com/jasonraimondi/prisma-generator-nestjs-graphql/blob/main/example/generated/User.model.ts).
+
+```typescript
+  constructor(model: UserConstructor) {
+    this.id = model.id ?? uuid();
+    this.email = model.email;
+    this.passwordHash = model.passwordHash ?? null;
+    this.tokenVersion = model.tokenVersion ?? 0;
+    this.lastLoginAt = model.lastLoginAt ?? null;
+    this.createdIP = model.createdIP;
+    this.createdAt = model.createdAt ?? new Date();
+    this.updatedAt = model.updatedAt ?? null;
+    this.posts = model.posts ?? null;
+  }
+```
+
+Create your own entities by extending the generated base entities.
+
+```
+export class User extends BaseUser {}
+```
+
+Extend your custom entities with additional fields.
+
+```
+export abstract class UserTokenEntity extends BaseUserToken {
+  @Field(() => User, { nullable: true })
+  user!: null | User;
+
+  constructor(props: UserTokenConstructor) {
+    props.user = props.user ? new User(props.user) : undefined;
+    super(props);
+  }
+}
+```

@@ -22,14 +22,15 @@ generatorHandler({
   },
   onGenerate: async (options: GeneratorOptions) => {
     const clientPath = options.generator.config.clientPath ?? "@prisma/client";
+    const prefix = options.generator.config.prefix ?? "Base";
     const writePath = (filePath: string) => path.join(options.generator.output?.value!, filePath);
 
     for (const modelInfo of options.dmmf.datamodel.models) {
-      const modelTemplate = generateModelTemplate(clientPath, modelInfo);
+      const modelTemplate = generateModelTemplate({ clientPath, prefix }, modelInfo);
       const modelPath = writePath(`/${modelInfo.name}.model.ts`);
       await writeFileSafely(modelPath, modelTemplate);
 
-      const dtoTemplate = generateDtoTemplate(clientPath, modelInfo);
+      const dtoTemplate = generateDtoTemplate({ clientPath, prefix }, modelInfo);
       const dtoPath = writePath(`/${modelInfo.name}.dto.ts`);
       await writeFileSafely(dtoPath, dtoTemplate);
     }
