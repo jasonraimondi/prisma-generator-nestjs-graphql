@@ -6,8 +6,6 @@ Generate @nestjs/graphql entities and create/update inputs
 
 ```bash
 pnpm add @jmondi/prisma-generator-nestjs-graphql
-npm install @jmondi/prisma-generator-nestjs-graphql
-yarn add @jmondi/prisma-generator-nestjs-graphql
 ```
 
 ## Usage
@@ -52,13 +50,13 @@ The special sauce here is the [type-safe constructors](https://github.com/jasonr
 
 Create your own entities by extending the generated base entities.
 
-```
+```typescript
 export class User extends BaseUser {}
 ```
 
 Extend your custom entities with additional fields.
 
-```
+```typescript
 export abstract class UserTokenEntity extends BaseUserToken {
   @Field(() => User, { nullable: true })
   user!: null | User;
