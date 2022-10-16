@@ -139,9 +139,9 @@ export { Prisma${model.name} };
 export type ${model.name}Constructor = {
   ${model.fields
     .map(f => {
-      const optional = f.isList || !f.isRequired || f.hasDefaultValue || f.relationName;
+      let optional = f.isList || !f.isRequired || f.hasDefaultValue || Boolean(f.relationName);
+      if (f.isId) optional = false;
       let result = f.name;
-      // @ts-ignore
       // const isAutoIncrement = f.default?.name === "autoincrement";
       // if (f.isId && isAutoIncrement) return `${f.name}: ${type(f)};`;
       if (optional) result += "?";
