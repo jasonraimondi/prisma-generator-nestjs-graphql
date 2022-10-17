@@ -186,7 +186,7 @@ export type ${model.name}Constructor = {
 }
 
 @ObjectType(${abstract ? "{ isAbstract: true }" : ""})
-export ${abstract ? "abstract " : ""}class ${prefix}${model.name} implements Prisma${model.name} {
+export class ${prefix}${model.name} implements Prisma${model.name} {
   ${model.fields
     .map(
       f => `
