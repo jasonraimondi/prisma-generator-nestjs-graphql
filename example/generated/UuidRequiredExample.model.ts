@@ -13,7 +13,7 @@ export type UuidRequiredExampleConstructor = {
   id: string;
 };
 
-@ObjectType({ isAbstract: true })
+@ObjectType()
 export class BaseUuidRequiredExample implements PrismaUuidRequiredExample {
   @Field(() => ID, { nullable: false })
   readonly id: string;

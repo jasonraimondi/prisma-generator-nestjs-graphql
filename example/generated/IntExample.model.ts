@@ -13,7 +13,7 @@ export type IntExampleConstructor = {
   id: number;
 };
 
-@ObjectType({ isAbstract: true })
+@ObjectType()
 export class BaseIntExample implements PrismaIntExample {
   @Field(() => ID, { nullable: false })
   readonly id: number;

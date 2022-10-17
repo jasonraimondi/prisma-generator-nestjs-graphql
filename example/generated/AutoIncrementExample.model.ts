@@ -13,7 +13,7 @@ export type AutoIncrementExampleConstructor = {
   id?: number | null;
 };
 
-@ObjectType({ isAbstract: true })
+@ObjectType()
 export class BaseAutoIncrementExample implements PrismaAutoIncrementExample {
   @Field(() => ID, { nullable: false })
   readonly id: number;

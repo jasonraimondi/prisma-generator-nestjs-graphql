@@ -26,7 +26,7 @@ export type UserConstructor = {
   posts?: BasePost[] | null;
 };
 
-@ObjectType({ isAbstract: true })
+@ObjectType()
 export class BaseUser implements PrismaUser {
   @Field(() => ID, { nullable: false })
   readonly id: string;

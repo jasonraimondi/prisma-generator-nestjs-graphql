@@ -15,7 +15,7 @@ export type CuidExampleConstructor = {
   id?: string | null;
 };
 
-@ObjectType({ isAbstract: true })
+@ObjectType()
 export class BaseCuidExample implements PrismaCuidExample {
   @Field(() => ID, { nullable: false })
   readonly id: string;

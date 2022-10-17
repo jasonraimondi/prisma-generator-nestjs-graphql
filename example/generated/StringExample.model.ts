@@ -13,7 +13,7 @@ export type StringExampleConstructor = {
   id: string;
 };
 
-@ObjectType({ isAbstract: true })
+@ObjectType()
 export class BaseStringExample implements PrismaStringExample {
   @Field(() => ID, { nullable: false })
   readonly id: string;

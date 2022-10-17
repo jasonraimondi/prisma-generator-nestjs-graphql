@@ -15,7 +15,7 @@ export type UuidExampleConstructor = {
   id?: string | null;
 };
 
-@ObjectType({ isAbstract: true })
+@ObjectType()
 export class BaseUuidExample implements PrismaUuidExample {
   @Field(() => ID, { nullable: false })
   readonly id: string;
