@@ -200,15 +200,11 @@ export ${abstract ? "abstract " : ""}class ${prefix}${model.name} implements Pri
   constructor(model: ${model.name}Constructor) {
      ${model.fields.map(f => `this.${f.name} = model.${f.name}${getDefaultValue(f)};`).join("\n")}
   }
-  
-  ${abstract ? `
-  abstract fromPrisma(hash: Prisma${model.name}): ${prefix}${model.name};
-  ` : `
+
   static fromPrisma(hash: Prisma${model.name}): ${prefix}${model.name} {
     return new ${prefix}${model.name}(hash);
   }
-  `}
-  
+
   toPrisma(): Prisma${model.name} {
     const { ${
       model.fields.filter(f => f.relationName).length
