@@ -4,8 +4,8 @@ datasource db {
 }
 
 generator custom_generator {
-  provider   = "ts-node node_modules/@jmondi/prisma-generator-nestjs-graphql/src/generator.ts"
-  output     = "../generated"
+  provider = "ts-node node_modules/@jmondi/prisma-generator-nestjs-graphql/src/generator.ts"
+  output   = "../generated"
 }
 
 generator client {
@@ -70,4 +70,9 @@ model UuidExample {
 
 model CuidExample {
   id String @id @default(cuid())
+}
+
+model JSONExample {
+  id      Int  @id
+  jsonCol Json
 }

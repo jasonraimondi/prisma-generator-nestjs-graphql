@@ -7,8 +7,6 @@ import { ObjectType, Field, ID } from "@nestjs/graphql";
 
 import { IntExample as PrismaIntExample } from "@prisma/client";
 
-export { PrismaIntExample };
-
 export type IntExampleConstructor = {
   id: number;
 };
@@ -26,8 +24,11 @@ export class BaseIntExample implements PrismaIntExample {
     return new BaseIntExample(hash);
   }
 
+  // this method removes all relational fields from the entity, and returns the base PrismaModel
   toPrisma(): PrismaIntExample {
     const { ...entity } = this;
     return entity;
   }
 }
+
+export { PrismaIntExample };

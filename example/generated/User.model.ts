@@ -12,8 +12,6 @@ import { ObjectType, Field, ID, HideField } from "@nestjs/graphql";
 import { User as PrismaUser } from "@prisma/client";
 import { BasePost } from "./Post.model";
 
-export { PrismaUser };
-
 export type UserConstructor = {
   id?: string | null;
   email: string;
@@ -77,8 +75,11 @@ export class BaseUser implements PrismaUser {
     return new BaseUser(hash);
   }
 
+  // this method removes all relational fields from the entity, and returns the base PrismaModel
   toPrisma(): PrismaUser {
     const { posts, ...entity } = this;
     return entity;
   }
 }
+
+export { PrismaUser };

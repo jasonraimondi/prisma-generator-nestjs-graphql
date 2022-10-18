@@ -10,8 +10,6 @@ import { ObjectType, Field, ID } from "@nestjs/graphql";
 import { Post as PrismaPost, Category } from "@prisma/client";
 import { BaseUser } from "./User.model";
 
-export { PrismaPost };
-
 export type PostConstructor = {
   id?: string | null;
   category: keyof typeof Category;
@@ -49,8 +47,11 @@ export class BasePost implements PrismaPost {
     return new BasePost(hash);
   }
 
+  // this method removes all relational fields from the entity, and returns the base PrismaModel
   toPrisma(): PrismaPost {
     const { user, ...entity } = this;
     return entity;
   }
 }
+
+export { PrismaPost };

@@ -166,8 +166,6 @@ import {
 } from "${clientPath}";
 ${importRelations(model, { prefix })}
 
-export { Prisma${model.name} };
-
 export type ${model.name}Constructor = {
   ${model.fields
     .map(f => {
@@ -205,6 +203,7 @@ export class ${prefix}${model.name} implements Prisma${model.name} {
     return new ${prefix}${model.name}(hash);
   }
 
+  // this method removes all relational fields from the entity, and returns the base PrismaModel
   toPrisma(): Prisma${model.name} {
     const { ${
       model.fields.filter(f => f.relationName).length
@@ -217,4 +216,7 @@ export class ${prefix}${model.name} implements Prisma${model.name} {
     return entity;
   }
 }
+
+export { Prisma${model.name} };
+
 `;

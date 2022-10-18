@@ -7,8 +7,6 @@ import { ObjectType, Field, ID } from "@nestjs/graphql";
 
 import { AutoIncrementExample as PrismaAutoIncrementExample } from "@prisma/client";
 
-export { PrismaAutoIncrementExample };
-
 export type AutoIncrementExampleConstructor = {
   id?: number | null;
 };
@@ -28,8 +26,11 @@ export class BaseAutoIncrementExample implements PrismaAutoIncrementExample {
     return new BaseAutoIncrementExample(hash);
   }
 
+  // this method removes all relational fields from the entity, and returns the base PrismaModel
   toPrisma(): PrismaAutoIncrementExample {
     const { ...entity } = this;
     return entity;
   }
 }
+
+export { PrismaAutoIncrementExample };

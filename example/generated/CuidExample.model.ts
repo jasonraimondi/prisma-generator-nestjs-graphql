@@ -9,8 +9,6 @@ import { ObjectType, Field, ID } from "@nestjs/graphql";
 
 import { CuidExample as PrismaCuidExample } from "@prisma/client";
 
-export { PrismaCuidExample };
-
 export type CuidExampleConstructor = {
   id?: string | null;
 };
@@ -28,8 +26,11 @@ export class BaseCuidExample implements PrismaCuidExample {
     return new BaseCuidExample(hash);
   }
 
+  // this method removes all relational fields from the entity, and returns the base PrismaModel
   toPrisma(): PrismaCuidExample {
     const { ...entity } = this;
     return entity;
   }
 }
+
+export { PrismaCuidExample };
