@@ -9,6 +9,8 @@ importers:
       '@prisma/sdk': ^4.0.0
       '@types/node': ^18.11.0
       '@types/prettier': ^2.7.1
+      graphql: ^16.6.0
+      graphql-type-json: ^0.3.2
       prettier: ^2.7.1
       prisma: ^4.4.0
       typescript: ^4.8.4
@@ -16,6 +18,8 @@ importers:
       '@prisma/client': 4.4.0_prisma@4.4.0
       '@prisma/generator-helper': 4.4.0
       '@prisma/sdk': 4.0.0
+      graphql: 16.6.0
+      graphql-type-json: 0.3.2_graphql@16.6.0
     devDependencies:
       '@types/node': 18.11.0
       '@types/prettier': 2.7.1
@@ -37,6 +41,7 @@ importers:
       class-validator: 0.13.2
       cuid: ^2.1.8
       graphql: ^16.6.0
+      graphql-type-json: ^0.3.2
       npm-run-all: ^4.1.5
       prettier: ^2.7.1
       prisma: ^4.4.0
@@ -52,6 +57,7 @@ importers:
       '@prisma/client': 4.4.0_prisma@4.4.0
       class-validator: 0.13.2
       cuid: 2.1.8
+      graphql-type-json: 0.3.2_graphql@16.6.0
       prettier: 2.7.1
     devDependencies:
       '@jmondi/prisma-generator-nestjs-graphql': link:..
@@ -1246,6 +1252,14 @@ packages:
     dependencies:
       graphql: 16.6.0
       tslib: 2.4.0
+    dev: false
+
+  /graphql-type-json/0.3.2_graphql@16.6.0:
+    resolution: {integrity: sha512-J+vjof74oMlCWXSvt0DOf2APEdZOCdubEvGDUAlqH//VBYcOYsGgRW7Xzorr44LvkjiuvecWc8fChxuZZbChtg==}
+    peerDependencies:
+      graphql: '>=0.8.0'
+    dependencies:
+      graphql: 16.6.0
     dev: false
 
   /graphql-ws/5.5.5_graphql@16.6.0:

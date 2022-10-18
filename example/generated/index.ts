@@ -4,6 +4,8 @@ export * from "./CuidExample.dto";
 export * from "./CuidExample.model";
 export * from "./IntExample.dto";
 export * from "./IntExample.model";
+export * from "./JSONExample.dto";
+export * from "./JSONExample.model";
 export * from "./Post.dto";
 export * from "./Post.model";
 export * from "./StringExample.dto";
