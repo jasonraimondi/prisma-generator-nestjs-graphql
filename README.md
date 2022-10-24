@@ -16,7 +16,8 @@ generator custom_generator {
   clientPath = "@prisma/client"
   output     = "../generated"
   prefix     = "Base"
-  abstract   = "false"
+  abstract   = false
+  compileJs  = false
 }
 ```
 

@@ -23,17 +23,18 @@ generatorHandler({
   onGenerate: async (options: GeneratorOptions) => {
     const clientPath = options.generator.config.clientPath ?? "@prisma/client";
     const prefix = options.generator.config.prefix ?? "Base";
-    const abstract = options.generator.config.abstract?.toString() === "true";
+    const abstract = options.generator.config.abstract?.toString() === "true"; // defaults to false
+    const compileJs = options.generator.config.compileJs?.toString() !== "false"; // defaults to true
     const writePath = (filePath: string) => path.join(options.generator.output?.value!, filePath);
 
     for (const modelInfo of options.dmmf.datamodel.models) {
       const modelTemplate = generateModelTemplate({ clientPath, prefix, abstract }, modelInfo);
       const modelPath = writePath(`/${modelInfo.name}.model.ts`);
-      await writeFileSafely(modelPath, modelTemplate);
+      await writeFileSafely(modelPath, modelTemplate, compileJs);
 
       const dtoTemplate = generateDtoTemplate({ clientPath, prefix }, modelInfo);
       const dtoPath = writePath(`/${modelInfo.name}.dto.ts`);
-      await writeFileSafely(dtoPath, dtoTemplate);
+      await writeFileSafely(dtoPath, dtoTemplate, compileJs);
     }
 
     const registerEnumsPath = writePath(`register.ts`);
@@ -42,10 +43,11 @@ generatorHandler({
       registerEnumsTemplate(clientPath, {
         enums: options.dmmf.datamodel.enums,
       }),
+      compileJs
     );
 
     const contents = await fs.readFile(path.join(__dirname, "../copy/paginator.ts"));
-    await writeFileSafely(writePath("/paginator.ts"), contents.toString());
+    await writeFileSafely(writePath("/paginator.ts"), contents.toString(), compileJs);
 
     const globPath = writePath(`/`);
     const files = (await fs.readdir(globPath)).map(name => name.replace(".ts", ""));
@@ -53,6 +55,6 @@ generatorHandler({
       .filter(file => file !== "index")
       .map(file => `export * from "./${file}";`)
       .join("\n");
-    await writeFileSafely(globPath + "index.ts", exports);
+    await writeFileSafely(globPath + "index.ts", exports, compileJs);
   },
 });
