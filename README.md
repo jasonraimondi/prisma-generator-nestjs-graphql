@@ -69,3 +69,9 @@ export abstract class UserTokenEntity extends BaseUserToken {
   }
 }
 ```
+
+## Debug?
+
+```
+ DEBUG=* pnpm prisma generate
+```
