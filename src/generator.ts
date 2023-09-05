@@ -43,7 +43,7 @@ generatorHandler({
       registerEnumsTemplate(clientPath, {
         enums: options.dmmf.datamodel.enums,
       }),
-      compileJs
+      compileJs,
     );
 
     const contents = await fs.readFile(path.join(__dirname, "../copy/paginator.ts"));

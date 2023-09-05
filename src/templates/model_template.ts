@@ -168,7 +168,7 @@ import {
   ${model.fields.filter(f => f.kind == "enum").map(f => f.type)}
 } from "${clientPath}";
 ${importRelations(model, { prefix })}
-${needsGraphqlJSONImport(model)  ? `import GraphQLJSON from "graphql-type-json";` : ""}
+${needsGraphqlJSONImport(model) ? `import GraphQLJSON from "graphql-type-json";` : ""}
 
 export type ${model.name}Constructor = {
   ${model.fields
