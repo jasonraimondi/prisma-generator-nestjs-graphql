@@ -35,9 +35,17 @@ type TypeArgs = {
   isFieldDecorator?: boolean;
 };
 
+
+export function importName(f: DMMF.Field, { prefix, isFieldDecorator }: TypeArgs) {
+    if (f.kind === "object") return `${prefix}${f.type}`;
+    if (f.kind === "enum") return `(typeof ${f.type})[keyof typeof ${f.type}]`;
+    return f.type;
+}
+
 export function type(f: DMMF.Field, { prefix, isFieldDecorator }: TypeArgs) {
-  if (f.kind === "object") return `${prefix}${f.type}`;
-  if (f.kind === "enum") return `(typeof ${f.type})[keyof typeof ${f.type}]`;
+  let result: null | string = null;
+  if (f.kind === "object") result = `${prefix}${f.type}`;
+  if (f.kind === "enum") result = `(typeof ${f.type})[keyof typeof ${f.type}]`;
   const map: Record<string, string> = {
     String: "string",
     Int: "number",
@@ -45,7 +53,9 @@ export function type(f: DMMF.Field, { prefix, isFieldDecorator }: TypeArgs) {
     DateTime: "Date",
     Json: "Prisma.JsonValue",
   };
-  return map[f.type] ?? f.type;
+  if (!result) result = map[f.type] ?? f.type;
+  const suffix = f.isList && "[]";
+  return suffix ? `(${result})${suffix}` : result;
 }
 
 type GraphqlTypeArgs = {
@@ -112,7 +122,7 @@ export function importRelations(model: DMMF.Model, args: ImportRelationsArgs): s
   const { filterOutRelations = false, prefix } = args;
   let fields = model.fields.filter(f => f.kind == "object");
   if (filterOutRelations) fields = fields.filter(f => !f.relationName);
-  return fields.map(f => `import { ${type(f, { prefix })} } from "./${modelPath(f)}";`).join("\n");
+  return fields.map(f => `import { ${importName(f, { prefix })} } from "./${modelPath(f)}";`).join("\n");
 }
 
 type GraphqlFieldsArgs = {
@@ -146,7 +156,7 @@ function createClassField(field: DMMF.Field, args: CreateClassFieldArgs) {
   if (isRequired(field)) result += ":";
   else result += ": null | ";
   result += type(field, { prefix });
-  if (field.isList) result += "[]";
+  // if (field.isList) result += "[]";
   return result;
 }
 
@@ -180,7 +190,7 @@ export type ${model.name}Constructor = {
       if (optional) result += "?";
       result += ": ";
       result += type(f, { prefix });
-      if (f.isList) result += "[]";
+      // if (f.isList) result += "[]";
       if (optional) result += ` | null`;
       return result;
     })

@@ -18,7 +18,7 @@ export class PostCreateInput implements PostConstructor {
   category!: (typeof Category)[keyof typeof Category];
 
   @Field(() => [Tag!]!, { nullable: false })
-  tags!: (typeof Tag)[keyof typeof Tag];
+  tags!: (typeof Tag)[keyof typeof Tag][];
 
   @Field(() => String!, { nullable: false })
   body!: string;
@@ -36,7 +36,7 @@ export class PostUpdateInput {
   category?: (typeof Category)[keyof typeof Category];
 
   @Field(() => [Tag], { nullable: true })
-  tags?: (typeof Tag)[keyof typeof Tag];
+  tags?: (typeof Tag)[keyof typeof Tag][];
 
   @Field(() => String, { nullable: true })
   body?: string;
@@ -51,7 +51,7 @@ export class PostWhereInput {
   category?: (typeof Category)[keyof typeof Category];
 
   @Field(() => [Tag], { nullable: true })
-  tags?: (typeof Tag)[keyof typeof Tag];
+  tags?: (typeof Tag)[keyof typeof Tag][];
 
   @Field(() => String, { nullable: true })
   body?: string;
