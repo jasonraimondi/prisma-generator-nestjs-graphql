@@ -15,10 +15,10 @@ export class PostCreateInput implements PostConstructor {
   id?: string;
 
   @Field(() => Category!, { nullable: false })
-  category!: typeof Category[keyof typeof Category];
+  category!: (typeof Category)[keyof typeof Category];
 
   @Field(() => [Tag!]!, { nullable: false })
-  tags!: typeof Tag[keyof typeof Tag];
+  tags!: (typeof Tag)[keyof typeof Tag];
 
   @Field(() => String!, { nullable: false })
   body!: string;
@@ -33,10 +33,10 @@ export class PostUpdateInput {
   id!: string;
 
   @Field(() => Category, { nullable: true })
-  category?: typeof Category[keyof typeof Category];
+  category?: (typeof Category)[keyof typeof Category];
 
   @Field(() => [Tag], { nullable: true })
-  tags?: typeof Tag[keyof typeof Tag];
+  tags?: (typeof Tag)[keyof typeof Tag];
 
   @Field(() => String, { nullable: true })
   body?: string;
@@ -48,10 +48,10 @@ export class PostWhereInput {
   id?: string;
 
   @Field(() => Category, { nullable: true })
-  category?: typeof Category[keyof typeof Category];
+  category?: (typeof Category)[keyof typeof Category];
 
   @Field(() => [Tag], { nullable: true })
-  tags?: typeof Tag[keyof typeof Tag];
+  tags?: (typeof Tag)[keyof typeof Tag];
 
   @Field(() => String, { nullable: true })
   body?: string;

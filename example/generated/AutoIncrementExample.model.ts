@@ -21,7 +21,7 @@ export class BaseAutoIncrementExample implements PrismaAutoIncrementExample {
   }
 
   static fromPrisma(
-    hash: PrismaAutoIncrementExample
+    hash: PrismaAutoIncrementExample,
   ): BaseAutoIncrementExample {
     return new BaseAutoIncrementExample(hash);
   }

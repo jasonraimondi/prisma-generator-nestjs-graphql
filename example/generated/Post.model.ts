@@ -12,8 +12,8 @@ import { BaseUser } from "./User.model";
 
 export type PostConstructor = {
   id?: string | null;
-  category: typeof Category[keyof typeof Category];
-  tags?: typeof Tag[keyof typeof Tag][] | null;
+  category: (typeof Category)[keyof typeof Category];
+  tags?: (typeof Tag)[keyof typeof Tag][] | null;
   body: string;
   userId: string;
   user?: BaseUser | null;
@@ -25,10 +25,10 @@ export class BasePost implements PrismaPost {
   readonly id: string;
 
   @Field(() => Category!, { nullable: false })
-  category: typeof Category[keyof typeof Category];
+  category: (typeof Category)[keyof typeof Category];
 
   @Field(() => [Tag!]!, { nullable: false })
-  tags: typeof Tag[keyof typeof Tag][];
+  tags: (typeof Tag)[keyof typeof Tag][];
 
   @Field(() => String!, { nullable: false })
   body: string;

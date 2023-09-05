@@ -21,8 +21,8 @@ generatorHandler({
     };
   },
   onGenerate: async (options: GeneratorOptions) => {
-    const clientPath = options.generator.config.clientPath ?? "@prisma/client";
-    const prefix = options.generator.config.prefix ?? "Base";
+    const clientPath = String(options.generator.config.clientPath ?? "@prisma/client");
+    const prefix = String(options.generator.config.prefix ?? "Base");
     const abstract = options.generator.config.abstract?.toString() === "true"; // defaults to false
     const compileJs = options.generator.config.compileJs?.toString() !== "false"; // defaults to true
     const writePath = (filePath: string) => path.join(options.generator.output?.value!, filePath);

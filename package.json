@@ -11,18 +11,18 @@
     "generate-nestjs-models": "src/generator.ts"
   },
   "dependencies": {
-    "@prisma/client": "^4.4.0",
-    "@prisma/generator-helper": "^4.4.0",
+    "@prisma/client": "^5.2.0",
+    "@prisma/generator-helper": "^5.2.0",
     "@prisma/sdk": "^4.0.0",
-    "graphql": "^16.6.0",
+    "graphql": "^16.8.0",
     "graphql-type-json": "^0.3.2"
   },
   "devDependencies": {
-    "@types/node": "^18.11.0",
-    "@types/prettier": "^2.7.1",
-    "prettier": "^2.7.1",
-    "prisma": "^4.4.0",
-    "typescript": "^4.8.4"
+    "@types/node": "^20.5.9",
+    "@types/prettier": "^3.0.0",
+    "prettier": "^3.0.3",
+    "prisma": "^5.2.0",
+    "typescript": "^5.2.2"
   },
   "publishConfig": {
     "main": "dist/generator.js",
