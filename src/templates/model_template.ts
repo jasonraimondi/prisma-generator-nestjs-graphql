@@ -37,7 +37,7 @@ type TypeArgs = {
 
 export function type(f: DMMF.Field, { prefix, isFieldDecorator }: TypeArgs) {
   if (f.kind === "object") return `${prefix}${f.type}`;
-  if (f.kind === "enum") return `keyof typeof ${f.type}`;
+  if (f.kind === "enum") return `(typeof ${f.type})[keyof typeof ${f.type}]`;
   const map: Record<string, string> = {
     String: "string",
     Int: "number",

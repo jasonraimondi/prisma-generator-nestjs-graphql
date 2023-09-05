@@ -4,9 +4,12 @@
 /////////////////////////////////////
 
 import { registerEnumType } from "@nestjs/graphql";
-import { Category } from "@prisma/client";
+import { Tag, Category } from "@prisma/client";
 
 export function registerEnums() {
+  registerEnumType(Tag, {
+    name: "Tag",
+  });
   registerEnumType(Category, {
     name: "Category",
   });

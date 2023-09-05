@@ -33,6 +33,11 @@ model User {
   @@index([email])
 }
 
+enum Tag {
+  blue
+  red
+}
+
 enum Category {
   fun
   boring
@@ -42,6 +47,7 @@ enum Category {
 model Post {
   id       String   @id @default(uuid()) @db.Uuid
   category Category
+  tags     Tag[]
   body     String
   userId   String
   user     User     @relation(fields: [userId], references: [id])

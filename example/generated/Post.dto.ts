@@ -4,7 +4,7 @@
 /////////////////////////////////////
 
 import { Field, InputType, ID } from "@nestjs/graphql";
-import { Category } from "@prisma/client";
+import { Category, Tag } from "@prisma/client";
 
 import { PostConstructor } from "./Post.model";
 import { PaginatorInputs } from "./paginator";
@@ -15,7 +15,10 @@ export class PostCreateInput implements PostConstructor {
   id?: string;
 
   @Field(() => Category!, { nullable: false })
-  category!: keyof typeof Category;
+  category!: typeof Category[keyof typeof Category];
+
+  @Field(() => [Tag!]!, { nullable: false })
+  tags!: typeof Tag[keyof typeof Tag];
 
   @Field(() => String!, { nullable: false })
   body!: string;
@@ -30,7 +33,10 @@ export class PostUpdateInput {
   id!: string;
 
   @Field(() => Category, { nullable: true })
-  category?: keyof typeof Category;
+  category?: typeof Category[keyof typeof Category];
+
+  @Field(() => [Tag], { nullable: true })
+  tags?: typeof Tag[keyof typeof Tag];
 
   @Field(() => String, { nullable: true })
   body?: string;
@@ -42,7 +48,10 @@ export class PostWhereInput {
   id?: string;
 
   @Field(() => Category, { nullable: true })
-  category?: keyof typeof Category;
+  category?: typeof Category[keyof typeof Category];
+
+  @Field(() => [Tag], { nullable: true })
+  tags?: typeof Tag[keyof typeof Tag];
 
   @Field(() => String, { nullable: true })
   body?: string;
