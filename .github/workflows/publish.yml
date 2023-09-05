@@ -26,7 +26,7 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
           registry-url: 'https://registry.npmjs.org'
       - run: pnpm i --frozen-lockfile --production false
-      - if: github.ref_name == 'main'
+      - if: github.ref == 'refs/heads/main'
         run: pnpm publish --access=public
-      - if: github.ref_name == 'next'
+      - if: github.ref == 'refs/heads/next'
         run: pnpm publish --access=public --publish-branch next --tag next
