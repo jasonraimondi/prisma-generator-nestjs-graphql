@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs/promises";
 
 import { GENERATOR_NAME } from "./constants";
-import { writeFileSafely } from "./utils/writeFileSafely";
+import { writeFile } from "./utils/writeFile";
 import { generateModelTemplate } from "./templates/model_template";
 import { generateDtoTemplate } from "./templates/dto_template";
 import { registerEnumsTemplate } from "./templates/register_enum_template";
@@ -30,15 +30,15 @@ generatorHandler({
     for (const modelInfo of options.dmmf.datamodel.models) {
       const modelTemplate = generateModelTemplate({ clientPath, prefix, abstract }, modelInfo);
       const modelPath = writePath(`/${modelInfo.name}.model.ts`);
-      await writeFileSafely(modelPath, modelTemplate, compileJs);
+      await writeFile(modelPath, modelTemplate, compileJs);
 
       const dtoTemplate = generateDtoTemplate({ clientPath, prefix }, modelInfo);
       const dtoPath = writePath(`/${modelInfo.name}.dto.ts`);
-      await writeFileSafely(dtoPath, dtoTemplate, compileJs);
+      await writeFile(dtoPath, dtoTemplate, compileJs);
     }
 
     const registerEnumsPath = writePath(`register.ts`);
-    await writeFileSafely(
+    await writeFile(
       registerEnumsPath,
       registerEnumsTemplate(clientPath, {
         enums: options.dmmf.datamodel.enums,
@@ -47,7 +47,7 @@ generatorHandler({
     );
 
     const contents = await fs.readFile(path.join(__dirname, "../copy/paginator.ts"));
-    await writeFileSafely(writePath("/paginator.ts"), contents.toString(), compileJs);
+    await writeFile(writePath("/paginator.ts"), contents.toString(), compileJs);
 
     const globPath = writePath(`/`);
     const files = (await fs.readdir(globPath)).map(name => name.replace(".ts", ""));
@@ -55,6 +55,6 @@ generatorHandler({
       .filter(file => file !== "index")
       .map(file => `export * from "./${file}";`)
       .join("\n");
-    await writeFileSafely(globPath + "index.ts", exports, compileJs);
+    await writeFile(globPath + "index.ts", exports, compileJs);
   },
 });

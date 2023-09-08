@@ -9,9 +9,7 @@ import { AutoIncrementExampleConstructor } from "./AutoIncrementExample.model";
 import { PaginatorInputs } from "./paginator";
 
 @InputType()
-export class AutoIncrementExampleCreateInput
-  implements AutoIncrementExampleConstructor
-{
+export class AutoIncrementExampleCreateInput implements AutoIncrementExampleConstructor {
   @Field(() => ID, { nullable: true })
   id?: number;
 }

@@ -20,9 +20,7 @@ export class BaseAutoIncrementExample implements PrismaAutoIncrementExample {
     this.id = model.id!;
   }
 
-  static fromPrisma(
-    hash: PrismaAutoIncrementExample,
-  ): BaseAutoIncrementExample {
+  static fromPrisma(hash: PrismaAutoIncrementExample): BaseAutoIncrementExample {
     return new BaseAutoIncrementExample(hash);
   }
 

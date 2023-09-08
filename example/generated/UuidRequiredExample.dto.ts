@@ -9,9 +9,7 @@ import { UuidRequiredExampleConstructor } from "./UuidRequiredExample.model";
 import { PaginatorInputs } from "./paginator";
 
 @InputType()
-export class UuidRequiredExampleCreateInput
-  implements UuidRequiredExampleConstructor
-{
+export class UuidRequiredExampleCreateInput implements UuidRequiredExampleConstructor {
   @Field(() => ID, { nullable: false })
   id!: string;
 }
