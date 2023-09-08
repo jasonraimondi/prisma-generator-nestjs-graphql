@@ -3,6 +3,7 @@
   "version": "1.5.2",
   "main": "src/generator.ts",
   "scripts": {
+    "test": "vitest run",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.(t|j)s*\"",
     "prepublish": "rm -rf ./dist && pnpm build"

@@ -19,7 +19,7 @@ export const importUUIDv4 = (model: DMMF.Model) =>
 export const modelPath = (f: DMMF.Field) => `${f.type}.model`;
 
 export function extraNestjsGraphqlFields(model: DMMF.Model) {
-  const inputs: string[] = [];
+  let inputs: string[] = [];
   model.fields
     .filter(f => !f.isId)
     .filter(f => !f.relationName)
@@ -27,7 +27,8 @@ export function extraNestjsGraphqlFields(model: DMMF.Model) {
     .forEach(f => {
       if (f.type === "Int" && !shouldHide(f.documentation)) inputs.push("Int");
     });
-  return [...new Set(inputs)];
+  inputs = [...new Set(inputs)];
+  return inputs;
 }
 
 type TypeArgs = {
@@ -35,11 +36,10 @@ type TypeArgs = {
   isFieldDecorator?: boolean;
 };
 
-
 export function importName(f: DMMF.Field, { prefix, isFieldDecorator }: TypeArgs) {
-    if (f.kind === "object") return `${prefix}${f.type}`;
-    if (f.kind === "enum") return `(typeof ${f.type})[keyof typeof ${f.type}]`;
-    return f.type;
+  if (f.kind === "object") return `${prefix}${f.type}`;
+  if (f.kind === "enum") return `(typeof ${f.type})[keyof typeof ${f.type}]`;
+  return f.type;
 }
 
 export function type(f: DMMF.Field, { prefix, isFieldDecorator }: TypeArgs) {

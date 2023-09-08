@@ -8,6 +8,7 @@ import { writeFile } from "./utils/writeFile";
 import { generateModelTemplate } from "./templates/model_template";
 import { generateDtoTemplate } from "./templates/dto_template";
 import { registerEnumsTemplate } from "./templates/register_enum_template";
+import { transformDMMF } from "./utils/transformDMMF";
 
 const { version } = require("../package.json");
 
@@ -26,6 +27,9 @@ generatorHandler({
     const abstract = options.generator.config.abstract?.toString() === "true"; // defaults to false
     const compileJs = options.generator.config.compileJs?.toString() !== "false"; // defaults to true
     const writePath = (filePath: string) => path.join(options.generator.output?.value!, filePath);
+
+    const foo = transformDMMF(options.dmmf, { prefix });
+    console.log(foo);
 
     for (const modelInfo of options.dmmf.datamodel.models) {
       const modelTemplate = generateModelTemplate({ clientPath, prefix, abstract }, modelInfo);
