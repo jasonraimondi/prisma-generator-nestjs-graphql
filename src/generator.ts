@@ -3,12 +3,12 @@ import { logger } from "@prisma/internals";
 import path from "path";
 import fs from "fs/promises";
 
-import { GENERATOR_NAME } from "./constants";
+import { GENERATOR_NAME } from "./constants/constants";
 import { writeFile } from "./utils/writeFile";
-import { generateModelTemplate } from "./templates/model_template";
 import { generateDtoTemplate } from "./templates/dto_template";
 import { registerEnumsTemplate } from "./templates/register_enum_template";
 import { transformDMMF } from "./utils/transformDMMF";
+import { generateModelTemplate } from "./templates/generate_model_template";
 
 const { version } = require("../package.json");
 
@@ -28,16 +28,17 @@ generatorHandler({
     const compileJs = options.generator.config.compileJs?.toString() !== "false"; // defaults to true
     const writePath = (filePath: string) => path.join(options.generator.output?.value!, filePath);
 
-    const foo = transformDMMF(options.dmmf, { prefix });
-    console.log(foo);
+    const newDMMF = transformDMMF(options.dmmf, { prefix });
 
-    for (const modelInfo of options.dmmf.datamodel.models) {
-      const modelTemplate = generateModelTemplate({ clientPath, prefix, abstract }, modelInfo);
-      const modelPath = writePath(`/${modelInfo.name}.model.ts`);
+    for (const model of newDMMF) {
+      const modelTemplate = generateModelTemplate(model, { clientPath, prefix, abstract });
+      const modelPath = writePath(`/${model.name}.model.ts`);
       await writeFile(modelPath, modelTemplate, compileJs);
+    }
 
-      const dtoTemplate = generateDtoTemplate({ clientPath, prefix }, modelInfo);
-      const dtoPath = writePath(`/${modelInfo.name}.dto.ts`);
+    for (const model of options.dmmf.datamodel.models) {
+      const dtoTemplate = generateDtoTemplate({ clientPath, prefix }, model);
+      const dtoPath = writePath(`/${model.name}.dto.ts`);
       await writeFile(dtoPath, dtoTemplate, compileJs);
     }
 

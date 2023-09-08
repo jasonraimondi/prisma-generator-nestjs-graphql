@@ -10,7 +10,8 @@ export async function writeFile(writeLocation: string, content: any, compileJs: 
   });
 
   if (compileJs && writeLocation.endsWith(".ts")) {
-    const jsContent = transpileTypescript(content);
+    let jsContent = transpileTypescript(content);
+    jsContent = await formatWithPrettier(jsContent);
     const jsWriteLocation = writeLocation.replace(".ts", ".js");
     await fs.writeFile(jsWriteLocation, jsContent);
   }
@@ -33,6 +34,7 @@ async function formatWithPrettier(content: string): Promise<string> {
       parser: "typescript",
     });
   } catch (error) {
+    console.log(error);
     return content;
   }
 }
