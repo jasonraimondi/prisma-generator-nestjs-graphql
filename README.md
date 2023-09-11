@@ -21,15 +21,6 @@ generator custom_generator {
 }
 ```
 
-You can also run the generator directly
-
-```prisma
-generator custom_generator {
-  provider   = "ts-node node_modules/@jmondi/prisma-generator-nestjs-graphql/src/generator.ts"
-  ...
-}
-```
-
 See the [generated examples](example/generated) for sample output.
 
 ## Why?
@@ -59,7 +50,7 @@ export class User extends BaseUser {}
 Extend your custom entities with additional fields.
 
 ```typescript
-export abstract class UserTokenEntity extends BaseUserToken {
+export abstract class UserToken extends BaseUserToken {
   @Field(() => User, { nullable: true })
   user!: null | User;
 
