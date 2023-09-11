@@ -4,25 +4,104 @@ import { getDMMF } from "@prisma/internals";
 import { transformDMMF } from "../../src/utils/transformDMMF";
 import { generateModelTemplate } from "../../src/templates/model";
 
-describe.skip("model template", () => {
+describe("model templater", () => {
   const config = { prefix: "", abstract: true, clientPath: "./client-path" };
 
-  describe("kitchen sink", () => {
-    it("success", async () => {
-      const dmmf = await getDMMF({
-        datamodel: `
-          model UuidExample {
+  it("with json", async () => {
+    const dmmf = await getDMMF({
+      datamodel: `
+          model User {
+            id      Int @id
+            jsonCol Json
+          }
+        `,
+    });
+
+    const [userModel] = transformDMMF(dmmf, config);
+    const modelTemplate = await generateModelTemplate(userModel, config);
+
+    expect(modelTemplate).toMatchSnapshot();
+  });
+
+  it("with autoincrement", async () => {
+    const dmmf = await getDMMF({
+      datamodel: `
+          model User {
+            id Int @id @default(autoincrement())
+          }
+        `,
+    });
+
+    const [userModel] = transformDMMF(dmmf, config);
+    const modelTemplate = await generateModelTemplate(userModel, config);
+
+    expect(modelTemplate).toMatchSnapshot();
+  });
+
+  it("with uuid", async () => {
+    const dmmf = await getDMMF({
+      datamodel: `
+          model User {
             id String @id @default(uuid())
           }
         `,
-      });
-
-      const [userModel] = transformDMMF(dmmf, config);
-      const modelTemplate = await generateModelTemplate(userModel, config);
-
-      expect(modelTemplate).toMatch(/import { v4 as uuid } from 'uuid';/);
-      expect(modelTemplate).toContain("@ObjectType({ isAbstract: true })");
-      expect(modelTemplate).toMatch(/export class UuidExample implements PrismaUuidExample/);
     });
+
+    const [userModel] = transformDMMF(dmmf, config);
+    const modelTemplate = await generateModelTemplate(userModel, config);
+
+    expect(modelTemplate).toMatchSnapshot();
+  });
+
+  it("with cuid", async () => {
+    const dmmf = await getDMMF({
+      datamodel: `
+          model User {
+            id String @id @default(cuid())
+          }
+        `,
+    });
+
+    const [userModel] = transformDMMF(dmmf, config);
+    const modelTemplate = await generateModelTemplate(userModel, config);
+
+    expect(modelTemplate).toMatchSnapshot();
+  });
+
+  it("with integer", async () => {
+    const dmmf = await getDMMF({
+      datamodel: `
+          model User {
+            id             String @id
+            favoriteNumber Int
+          }
+        `,
+    });
+
+    const [userModel] = transformDMMF(dmmf, config);
+    const modelTemplate = await generateModelTemplate(userModel, config);
+
+    expect(modelTemplate).toMatchSnapshot();
+  });
+
+  it("with relation", async () => {
+    const dmmf = await getDMMF({
+      datamodel: `
+          model User {
+            id    String @id
+            posts Post[]
+          }
+          model Post {
+            id       String @id @default(uuid())
+            userId   String
+            user     User   @relation(fields: [userId], references: [id])
+          }
+        `,
+    });
+
+    const [userModel] = transformDMMF(dmmf, config);
+    const modelTemplate = await generateModelTemplate(userModel, config);
+
+    expect(modelTemplate).toMatchSnapshot();
   });
 });
