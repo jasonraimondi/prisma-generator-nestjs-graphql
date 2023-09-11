@@ -5,7 +5,6 @@ import fs from "fs/promises";
 
 import { GENERATOR_NAME } from "./constants";
 import { writeFile } from "./utils/writeFile";
-import { generateDtoTemplate } from "./templates/dto";
 import { registerEnumsTemplate } from "./templates/register_enums";
 import { transformDMMF } from "./utils/transformDMMF";
 import { generateModelTemplate } from "./templates/model";
@@ -37,10 +36,6 @@ generatorHandler({
       const modelTemplate = await generateModelTemplate(model, config);
       const modelPath = writePath(`/${model.name}.model.ts`);
       await writeFile(modelPath, modelTemplate, config.compileJs);
-
-      const dtoTemplate = await generateDtoTemplate(model, config);
-      const dtoPath = writePath(`/${model.name}.dto.ts`);
-      await writeFile(dtoPath, dtoTemplate, config.compileJs);
     }
 
     const registerEnumsPath = writePath(`register.ts`);

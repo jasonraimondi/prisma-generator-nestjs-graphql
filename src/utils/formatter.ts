@@ -1,19 +1,8 @@
 import { DMMF } from "@prisma/generator-helper";
-import { extractValidations } from "../utils/transformDMMF";
 
-export const isReadOnly = (f: DMMF.Field) => f.isReadOnly || f.isId;
-export const needsIDField = (model: DMMF.Model) => model.fields.filter(f => f.isId).length > 0;
-export const needsGraphqlJSONImport = (model: DMMF.Model) =>
-  model.fields.filter((f: any) => f.type === "Json").length > 0;
 type TypeArgs = {
   prefix: string;
 };
-
-export function importName(f: DMMF.Field, { prefix }: TypeArgs) {
-  if (f.kind === "object") return `${prefix}${f.type}`;
-  if (f.kind === "enum") return `(typeof ${f.type})[keyof typeof ${f.type}]`;
-  return f.type;
-}
 
 export function type(f: DMMF.Field, { prefix }: TypeArgs) {
   let result: null | string = null;
@@ -36,7 +25,6 @@ type GraphqlTypeArgs = {
   prefix: string;
 };
 
-export const shouldHide = (documentation?: string) => documentation?.includes("@HideField()") || false;
 export const isRequired = (f: DMMF.Field) => (f.isRequired || f.isId) && !f.relationName;
 
 export function graphqlType(f: DMMF.Field, args: GraphqlTypeArgs) {
@@ -48,20 +36,6 @@ export function graphqlType(f: DMMF.Field, args: GraphqlTypeArgs) {
   const result = f.kind === "object" ? `${prefix}${f.type}` : `${map[f.type] ?? f.type}`;
   if (f.isList) return `[${result}${!forceOptional && isRequired(f) ? "!]!" : "]"}`;
   return `${result}${!forceOptional && isRequired(f) ? "!" : ""}`;
-}
-
-export function validationBlocks(documentation?: string): string {
-  // @see https://regex101.com/r/7Y548N/1
-  const matches = documentation?.match(/@Validate.[a-zA-Z]+\([a-zA-Z ,()'"[\]]+/g);
-  return (matches ?? [])
-    .map(m => m.split("@Validate.")[1])
-    .map(m => `@${m}`)
-    .join("\n");
-}
-
-export function importValidations(model: DMMF.Model) {
-  const imports = extractValidations(model);
-  return imports ? `import { ${imports} } from "class-validator";` : "";
 }
 
 export function getDefaultValue(field: DMMF.Field) {
@@ -84,38 +58,10 @@ export function getDefaultValue(field: DMMF.Field) {
   return false;
 }
 
-type ImportRelationsArgs = {
-  prefix: string;
-  filterOutRelations?: boolean;
-};
-
-export function importRelations(model: DMMF.Model, args: ImportRelationsArgs): string {
-  const { filterOutRelations = false, prefix } = args;
-  let fields = model.fields.filter(f => f.kind == "object");
-  if (filterOutRelations) fields = fields.filter(f => !f.relationName);
-  return fields.map(f => `import { ${importName(f, { prefix })} } from "./${f.type}.model";`).join("\n");
-}
-
 type GraphqlFieldsArgs = {
   prefix: string;
 };
 
 export function graphqlField(f: DMMF.Field, { prefix }: GraphqlFieldsArgs) {
   return `@Field(() => ${f.isId ? "ID" : graphqlType(f, { prefix })}, { nullable: ${!isRequired(f)} })`;
-}
-
-type CreateClassFieldArgs = {
-  prefix: string;
-};
-
-export function createClassField(field: DMMF.Field, args: CreateClassFieldArgs) {
-  const { prefix } = args;
-  // const autoInc = isAutoIncrement(field);
-  let result = "";
-  if (isReadOnly(field)) result += "readonly ";
-  result += field.name;
-  if (isRequired(field)) result += ":";
-  else result += ": null | ";
-  result += type(field, { prefix });
-  return result;
 }

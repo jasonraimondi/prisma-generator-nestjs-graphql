@@ -1,6 +1,6 @@
 import { DMMF } from "@prisma/generator-helper";
 
-import { createClassField, getDefaultValue, graphqlField, graphqlType, type } from "./formatter";
+import { getDefaultValue, graphqlField, graphqlType, type } from "./formatter";
 
 export function checkIsID(f: DMMF.Field): boolean {
   return f.isId;
@@ -44,13 +44,6 @@ export function checkCanCreate(f: DMMF.Field): boolean {
 
 export function checkCanUpdate(f: DMMF.Field): boolean {
   return !(checkHidden(f) || f.isReadOnly || f.isId || f.relationName || f.isUpdatedAt || f.name.startsWith("created"));
-}
-
-export function hasRelatedFields(m: DMMF.Model, f: DMMF.Field) {
-  return !m.fields
-    .filter(f => f.relationName)
-    .map(f => f.name)
-    .filter(relation => f.name.startsWith(relation)).length;
 }
 
 export function extractValidations(model: DMMF.Model) {
@@ -130,9 +123,6 @@ export function transformDMMF(dmmf: DMMF.Document, options: Options) {
             ?.map(m => m.split("@Validate.")[1])
             .map(m => `@${m}`)
             .join("\n"),
-
-          // potentially useless
-          classSomething: createClassField(f, { prefix: options.prefix }),
         };
       }),
     };
