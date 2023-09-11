@@ -1,0 +1,17 @@
+name: 'Setup'
+description: 'Setup node and install dependencies'
+
+runs:
+  using: "composite"
+  steps:
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: ".tool-versions"
+        cache: pnpm
+        cache-dependency-path: pnpm-lock.yaml
+        registry-url: 'https://registry.npmjs.org'
+    - run: pnpm install --frozen-lockfile --production false
+      shell: bash
