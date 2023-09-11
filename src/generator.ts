@@ -34,11 +34,11 @@ generatorHandler({
 
     for (const model of newDMMF) {
       const modelTemplate = await generateModelTemplate(model, config);
-      const modelPath = writePath(`/${model.name}.model.ts`);
+      const modelPath = writePath(`./${model.name}.model.ts`);
       await writeFile(modelPath, modelTemplate, config.compileJs);
     }
 
-    const registerEnumsPath = writePath(`register.ts`);
+    const registerEnumsPath = writePath(`./register.ts`);
     await writeFile(
       registerEnumsPath,
       registerEnumsTemplate(config.clientPath, {
@@ -50,7 +50,7 @@ generatorHandler({
     const contents = await fs.readFile(path.join(__dirname, "../copy/paginator.ts"));
     await writeFile(writePath("./paginator.ts"), contents.toString(), config.compileJs);
 
-    const globPath = writePath(`/`);
+    const globPath = writePath(`./`);
     const files = (await fs.readdir(globPath)).map(name => name.replace(".ts", ""));
     const exports = files
       .filter(file => file !== "index")
