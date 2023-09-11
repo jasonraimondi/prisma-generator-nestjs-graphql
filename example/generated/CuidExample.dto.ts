@@ -5,8 +5,9 @@
 
 import { Field, InputType, ID } from "@nestjs/graphql";
 
-import { CuidExampleConstructor } from "./CuidExample.model";
+import { CuidExample as PrismaCuidExample } from "@prisma/client";
 import { PaginatorInputs } from "./paginator";
+import { CuidExampleConstructor } from "./CuidExample.model";
 
 @InputType()
 export class CuidExampleCreateInput implements CuidExampleConstructor {
@@ -16,8 +17,8 @@ export class CuidExampleCreateInput implements CuidExampleConstructor {
 
 @InputType()
 export class CuidExampleUpdateInput {
-  @Field(() => ID!, { nullable: false })
-  id!: string;
+  @Field(() => ID, { nullable: true })
+  id?: string;
 }
 
 @InputType()

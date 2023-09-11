@@ -1,37 +1,10 @@
 import { DMMF } from "@prisma/generator-helper";
 import { extractValidations } from "../utils/transformDMMF";
-import { ModelOptions } from "./generate_model_template";
 
-export const shouldHide = (documentation?: string) => documentation?.includes("@HideField()") || false;
-export const isRequired = (f: DMMF.Field) => (f.isRequired || f.isId) && !f.relationName;
 export const isReadOnly = (f: DMMF.Field) => f.isReadOnly || f.isId;
-export const needsHideField = (model: DMMF.Model) => model.fields.filter(f => shouldHide(f.documentation)).length > 0;
 export const needsIDField = (model: DMMF.Model) => model.fields.filter(f => f.isId).length > 0;
-export const needsCuidImport = (model: DMMF.Model) =>
-  model.fields.filter((f: any) => f.default?.name === "cuid").length > 0;
 export const needsGraphqlJSONImport = (model: DMMF.Model) =>
   model.fields.filter((f: any) => f.type === "Json").length > 0;
-export const importCuid = (model: DMMF.Model) => (needsCuidImport(model) ? `import cuid from "cuid";` : "");
-export const needsUUIDv4Import = (model: DMMF.Model) =>
-  model.fields.filter((f: any) => f.default?.name === "uuid").length > 0;
-export const importUUIDv4 = (model: DMMF.Model) =>
-  needsUUIDv4Import(model) ? `import { v4 as uuid } from "uuid";` : "";
-
-export const modelPath = (f: DMMF.Field) => `${f.type}.model`;
-
-export function extraNestjsGraphqlFields(model: DMMF.Model) {
-  let inputs: string[] = [];
-  model.fields
-    .filter(f => !f.isId)
-    .filter(f => !f.relationName)
-    .filter(f => !f.isUpdatedAt)
-    .forEach(f => {
-      if (f.type === "Int" && !shouldHide(f.documentation)) inputs.push("Int");
-    });
-  inputs = [...new Set(inputs)];
-  return inputs;
-}
-
 type TypeArgs = {
   prefix: string;
 };
@@ -62,6 +35,9 @@ type GraphqlTypeArgs = {
   forceOptional?: boolean;
   prefix: string;
 };
+
+export const shouldHide = (documentation?: string) => documentation?.includes("@HideField()") || false;
+export const isRequired = (f: DMMF.Field) => (f.isRequired || f.isId) && !f.relationName;
 
 export function graphqlType(f: DMMF.Field, args: GraphqlTypeArgs) {
   const { forceOptional = false, prefix } = args;
@@ -105,7 +81,7 @@ export function getDefaultValue(field: DMMF.Field) {
 
   if (!field.isRequired || field.relationName) return "?? null";
   if (field.isList) return "?? []";
-  return "";
+  return false;
 }
 
 type ImportRelationsArgs = {
@@ -124,19 +100,9 @@ type GraphqlFieldsArgs = {
   prefix: string;
 };
 
-export function graphqlFields(f: DMMF.Field, { prefix }: GraphqlFieldsArgs) {
+export function graphqlField(f: DMMF.Field, { prefix }: GraphqlFieldsArgs) {
   return `@Field(() => ${f.isId ? "ID" : graphqlType(f, { prefix })}, { nullable: ${!isRequired(f)} })`;
 }
-
-export const importNestjsGraphql = (model: DMMF.Model) => `
-  import {
-    ObjectType,
-    Field,
-    ${needsIDField(model) ? "ID," : ""}
-    ${needsHideField(model) ? "HideField," : ""}
-    ${extraNestjsGraphqlFields(model)}
-  } from "@nestjs/graphql";
-`;
 
 type CreateClassFieldArgs = {
   prefix: string;

@@ -7,7 +7,7 @@ import { v4 as uuid } from "uuid";
 
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 import { Post as PrismaPost, Category, Tag } from "@prisma/client";
-import { User } from "./User.model";
+import { BaseUser } from "./User.model";
 
 export type PostConstructor = {
   id?: string | null;

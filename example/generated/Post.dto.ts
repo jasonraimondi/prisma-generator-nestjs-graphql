@@ -4,10 +4,10 @@
 /////////////////////////////////////
 
 import { Field, InputType, ID } from "@nestjs/graphql";
-import { Category, Tag } from "@prisma/client";
-
-import { PostConstructor } from "./Post.model";
+import { BaseUser } from "./User.model";
+import { Post as PrismaPost, Category, Tag } from "@prisma/client";
 import { PaginatorInputs } from "./paginator";
+import { PostConstructor } from "./Post.model";
 
 @InputType()
 export class PostCreateInput implements PostConstructor {
@@ -29,16 +29,16 @@ export class PostCreateInput implements PostConstructor {
 
 @InputType()
 export class PostUpdateInput {
-  @Field(() => ID!, { nullable: false })
-  id!: string;
+  @Field(() => ID, { nullable: true })
+  id?: string;
 
-  @Field(() => Category, { nullable: true })
+  @Field(() => Category!, { nullable: false })
   category?: (typeof Category)[keyof typeof Category];
 
-  @Field(() => [Tag], { nullable: true })
+  @Field(() => [Tag!]!, { nullable: true })
   tags?: (typeof Tag)[keyof typeof Tag][];
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String!, { nullable: false })
   body?: string;
 }
 
@@ -47,16 +47,16 @@ export class PostWhereInput {
   @Field(() => ID, { nullable: true })
   id?: string;
 
-  @Field(() => Category, { nullable: true })
+  @Field(() => Category!, { nullable: true })
   category?: (typeof Category)[keyof typeof Category];
 
-  @Field(() => [Tag], { nullable: true })
+  @Field(() => [Tag!]!, { nullable: true })
   tags?: (typeof Tag)[keyof typeof Tag][];
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String!, { nullable: true })
   body?: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String!, { nullable: true })
   userId?: string;
 }
 

@@ -8,7 +8,7 @@ import { v4 as uuid } from "uuid";
 import { IsEmail, IsDate, MaxDate, IsIP } from "class-validator";
 import { ObjectType, Field, ID, HideField } from "@nestjs/graphql";
 import { User as PrismaUser } from "@prisma/client";
-import { Post } from "./Post.model";
+import { BasePost } from "./Post.model";
 
 export type UserConstructor = {
   id?: string | null;
@@ -36,16 +36,16 @@ export class BaseUser implements PrismaUser {
   @HideField()
   tokenVersion: number;
 
-  @Field(() => Date, { nullable: true })
+  @HideField()
   lastLoginAt: null | Date;
 
-  @Field(() => String!, { nullable: false })
+  @HideField()
   createdIP: string;
 
-  @Field(() => Date!, { nullable: false })
+  @HideField()
   createdAt: Date;
 
-  @Field(() => Date, { nullable: true })
+  @HideField()
   updatedAt: null | Date;
 
   @Field(() => [BasePost], { nullable: true })

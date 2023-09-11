@@ -1,23 +1,23 @@
 import { DMMF } from "@prisma/generator-helper";
+import { AUTO_GENERATED_MESSAGE, ModelOptions } from "../constants";
+import { transformDMMF } from "../utils/transformDMMF";
 import {
   graphqlType,
   importRelations,
-  importValidations,
   isRequired,
   needsGraphqlJSONImport,
-  needsIDField,
   shouldHide,
   type,
   validationBlocks,
-} from "./model_template";
-import { AUTO_GENERATED_MESSAGE } from "../constants/constants";
+} from "../utils/formatter";
+import { formatWithPrettier } from "../utils/writeFile";
 
 type GenerateDtoTemplateArgs = {
   clientPath: string;
   prefix: string;
 };
 
-export function generateDtoTemplate(args: GenerateDtoTemplateArgs, model: DMMF.Model) {
+export function xgenerateDtoTemplate(args: GenerateDtoTemplateArgs, model: DMMF.Model) {
   const { clientPath, prefix } = args;
 
   const createField = (field: DMMF.Field) => {
@@ -73,24 +73,6 @@ ${field.name}?: ${type(field, { prefix })}
 `;
   };
 
-  const hasRelatedFields = (f: DMMF.Field) =>
-    !model.fields
-      .filter(f => f.relationName)
-      .map(f => f.name)
-      .filter(relation => f.name.startsWith(relation)).length;
-
-  const extraInputs = (model: DMMF.Model) => {
-    const inputs: string[] = [];
-    model.fields
-      .filter(f => !f.isId)
-      .filter(f => !f.relationName)
-      .filter(f => !f.isUpdatedAt)
-      .forEach(f => {
-        if (f.type === "Int") inputs.push("Int");
-      });
-    return [...new Set(inputs)];
-  };
-
   const listEnums = model.fields.filter(f => f.kind == "enum");
 
   const needsPrismaImport = (model: DMMF.Model) => {
@@ -99,14 +81,6 @@ ${field.name}?: ${type(field, { prefix })}
   };
 
   return `
-    ${AUTO_GENERATED_MESSAGE}
-
-    import { 
-      Field, 
-      InputType, 
-      ${needsIDField(model) ? "ID," : ""} 
-      ${extraInputs(model)} 
-    } from "@nestjs/graphql";
     ${
       needsPrismaImport(model)
         ? `import {
@@ -116,10 +90,6 @@ ${field.name}?: ${type(field, { prefix })}
         : ""
     }
     ${importRelations(model, { filterOutRelations: true, prefix })}
-    ${importValidations(model)}
-    import { ${model.name}Constructor } from "./${model.name}.model";
-    import { PaginatorInputs } from "./paginator";
-    ${needsGraphqlJSONImport(model) ? `import GraphQLJSON from "graphql-type-json";` : ""}
     
     @InputType()
     export class ${model.name}CreateInput implements ${model.name}Constructor {
@@ -135,7 +105,6 @@ ${field.name}?: ${type(field, { prefix })}
     ${model.fields
       .filter(f => !f.relationName)
       .filter(f => !f.isUpdatedAt)
-      .filter(hasRelatedFields)
       .map(updateField)
       .join("")}
     }
@@ -155,4 +124,79 @@ ${field.name}?: ${type(field, { prefix })}
     export class ${model.name}PaginatorInput extends PaginatorInputs {
     }
 `;
+}
+
+export async function generateDtoTemplate(m: ReturnType<typeof transformDMMF>[number], config: ModelOptions) {
+  const { clientPath = "@prisma/client", prefix = "" } = config;
+
+  const template = `
+    ${AUTO_GENERATED_MESSAGE}
+    ${m.imports.graphqlJSONImport ? "import GraphQLJSON from 'graphql-type-json';" : ""}
+    ${m.imports.classValidator ? `import { ${m.imports.classValidator} } from "class-validator";` : ""}
+    import { 
+      Field, 
+      InputType, 
+      ${m.imports.id ? "ID," : ""} 
+      ${m.imports.nestGraphql ? m.imports.nestGraphql : ""} 
+    } from "@nestjs/graphql";
+    ${m.imports.relations.map(r => `import { ${config.prefix + r.type} } from "./${r.type}.model";`).join("\n")}
+    import {
+      ${m.imports.graphqlJSONImport ? "Prisma," : ""}
+      ${m.name} as Prisma${m.name},
+      ${m.imports.enums}
+    } from "${clientPath}";
+    import { PaginatorInputs } from "./paginator";
+    import { ${m.name}Constructor } from "./${m.name}.model";
+    
+    @InputType()
+    export class ${m.name}CreateInput implements ${m.name}Constructor {
+    ${m.fields
+      .filter(f => f.canCreate)
+      .map(
+        f => `
+          ${f.validationBlocks ? f.validationBlocks : ""}
+          @Field(() => ${f.isId ? "ID" : f.graphqlType}, { nullable: ${f.isId || !f.isRequired} })  
+          ${f.name}${f.isId || !f.isRequired ? "?" : "!"}: ${f.type};
+        `,
+      )
+      .join("\n")}
+    }
+    
+    @InputType()
+    export class ${m.name}UpdateInput {
+      @Field(() => ID, { nullable: true })  
+      ${m.fields.find(f => f.isId)!.name}?: ${m.fields.find(f => f.isId)!.type}
+    
+    ${m.fields
+      .filter(f => f.canUpdate)
+      .map(
+        f => `
+          @Field(() => ${f.graphqlType}, { nullable: ${f.isOptional} })
+          ${f.name}${f.isId ? "!" : "?"}: ${f.type}
+        `,
+      )
+      .join("\n")}
+    }
+
+    @InputType()
+    export class ${m.name}WhereInput {
+    ${m.fields
+      .filter(f => !f.isRelatedField)
+      .filter(f => !f.name.startsWith("created"))
+      .filter(f => !f.isHidden)
+      .map(
+        f => `
+          @Field(() => ${f.isId ? "ID" : f.graphqlType}, { nullable: true })  
+          ${f.name}?: ${f.type}
+        `,
+      )
+      .join("\n")}
+    }
+
+    @InputType()
+      export class ${m.name}PaginatorInput extends PaginatorInputs {
+    }
+  `;
+
+  return await formatWithPrettier(template);
 }

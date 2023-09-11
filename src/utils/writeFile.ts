@@ -20,12 +20,12 @@ export async function writeFile(writeLocation: string, content: any, compileJs: 
   await fs.writeFile(writeLocation, content);
 }
 
-function transpileTypescript(source: string) {
+export function transpileTypescript(source: string) {
   const transpileOptions = { compilerOptions: { module: ModuleKind.CommonJS } };
   return transpileModule(source, transpileOptions).outputText;
 }
 
-async function formatWithPrettier(content: string): Promise<string> {
+export async function formatWithPrettier(content: string): Promise<string> {
   try {
     const prettierRc = path.join(__dirname, "../../");
     const options = await prettier.resolveConfig(prettierRc).catch();
@@ -34,7 +34,6 @@ async function formatWithPrettier(content: string): Promise<string> {
       parser: "typescript",
     });
   } catch (error) {
-    console.log(error);
     return content;
   }
 }

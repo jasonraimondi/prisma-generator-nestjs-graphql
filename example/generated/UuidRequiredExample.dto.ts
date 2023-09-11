@@ -5,19 +5,20 @@
 
 import { Field, InputType, ID } from "@nestjs/graphql";
 
-import { UuidRequiredExampleConstructor } from "./UuidRequiredExample.model";
+import { UuidRequiredExample as PrismaUuidRequiredExample } from "@prisma/client";
 import { PaginatorInputs } from "./paginator";
+import { UuidRequiredExampleConstructor } from "./UuidRequiredExample.model";
 
 @InputType()
 export class UuidRequiredExampleCreateInput implements UuidRequiredExampleConstructor {
-  @Field(() => ID, { nullable: false })
-  id!: string;
+  @Field(() => ID, { nullable: true })
+  id?: string;
 }
 
 @InputType()
 export class UuidRequiredExampleUpdateInput {
-  @Field(() => ID!, { nullable: false })
-  id!: string;
+  @Field(() => ID, { nullable: true })
+  id?: string;
 }
 
 @InputType()

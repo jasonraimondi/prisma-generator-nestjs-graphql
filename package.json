@@ -4,6 +4,7 @@
   "main": "src/generator.ts",
   "scripts": {
     "test": "vitest run",
+    "test:watch": "vitest",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.(t|j)s*\"",
     "prepublish": "rm -rf ./dist && pnpm build"

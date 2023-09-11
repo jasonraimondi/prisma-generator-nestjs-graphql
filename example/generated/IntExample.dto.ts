@@ -5,19 +5,20 @@
 
 import { Field, InputType, ID } from "@nestjs/graphql";
 
-import { IntExampleConstructor } from "./IntExample.model";
+import { IntExample as PrismaIntExample } from "@prisma/client";
 import { PaginatorInputs } from "./paginator";
+import { IntExampleConstructor } from "./IntExample.model";
 
 @InputType()
 export class IntExampleCreateInput implements IntExampleConstructor {
-  @Field(() => ID, { nullable: false })
-  id!: number;
+  @Field(() => ID, { nullable: true })
+  id?: number;
 }
 
 @InputType()
 export class IntExampleUpdateInput {
-  @Field(() => ID!, { nullable: false })
-  id!: number;
+  @Field(() => ID, { nullable: true })
+  id?: number;
 }
 
 @InputType()

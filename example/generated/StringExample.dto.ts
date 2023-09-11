@@ -5,19 +5,20 @@
 
 import { Field, InputType, ID } from "@nestjs/graphql";
 
-import { StringExampleConstructor } from "./StringExample.model";
+import { StringExample as PrismaStringExample } from "@prisma/client";
 import { PaginatorInputs } from "./paginator";
+import { StringExampleConstructor } from "./StringExample.model";
 
 @InputType()
 export class StringExampleCreateInput implements StringExampleConstructor {
-  @Field(() => ID, { nullable: false })
-  id!: string;
+  @Field(() => ID, { nullable: true })
+  id?: string;
 }
 
 @InputType()
 export class StringExampleUpdateInput {
-  @Field(() => ID!, { nullable: false })
-  id!: string;
+  @Field(() => ID, { nullable: true })
+  id?: string;
 }
 
 @InputType()

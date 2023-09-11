@@ -5,8 +5,9 @@
 
 import { Field, InputType, ID } from "@nestjs/graphql";
 
-import { UuidExampleConstructor } from "./UuidExample.model";
+import { UuidExample as PrismaUuidExample } from "@prisma/client";
 import { PaginatorInputs } from "./paginator";
+import { UuidExampleConstructor } from "./UuidExample.model";
 
 @InputType()
 export class UuidExampleCreateInput implements UuidExampleConstructor {
@@ -16,8 +17,8 @@ export class UuidExampleCreateInput implements UuidExampleConstructor {
 
 @InputType()
 export class UuidExampleUpdateInput {
-  @Field(() => ID!, { nullable: false })
-  id!: string;
+  @Field(() => ID, { nullable: true })
+  id?: string;
 }
 
 @InputType()

@@ -1,8 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { getDMMF } from "@prisma/internals";
-import { transformDMMF } from "./transformDMMF";
-
-import { generateModelTemplate } from "../templates/generate_model_template";
+import { transformDMMF } from "../../src/utils/transformDMMF";
 
 describe("transformDMMF", () => {
   describe("kitchen sink", () => {
@@ -47,10 +45,6 @@ describe("transformDMMF", () => {
       const dmmf = await getDMMF({ datamodel: datamodelString });
 
       const [userModel] = transformDMMF(dmmf, { prefix: "" });
-
-      const foo = generateModelTemplate(userModel);
-
-      console.log(userModel, foo);
 
       expect(userModel.imports.id).toBe(true);
       expect(userModel.imports.hideField).toBe(true);

@@ -1,19 +1,57 @@
 import { DMMF } from "@prisma/generator-helper";
-import { createClassField, getDefaultValue, graphqlFields, type } from "../templates/model_template";
 
-export const checkIsID = (f: DMMF.Field) => f.isId;
-export const checkTypeJson = (f: DMMF.Field) => f.type === "Json";
-export const checkCUID = (f: DMMF.Field) =>
-  typeof f.default === "object" && "name" in f.default && f.default.name === "cuid";
-export const checkUUID = (f: DMMF.Field) =>
-  typeof f.default === "object" && "name" in f.default && f.default.name === "uuid";
-export const checkAutoIncrement = (f: DMMF.Field) =>
-  typeof f.default === "object" && "name" in f.default && f.default.name === "autoincrement";
-export const checkRequired = (f: DMMF.Field) => (f.isRequired || f.isId) && !f.relationName;
-export const checkReadOnly = (f: DMMF.Field) => f.isReadOnly || f.isId;
-export const checkOptional = (f: DMMF.Field) =>
-  f.isList || !f.isRequired || f.hasDefaultValue || Boolean(f.relationName);
-export const checkHidden = (f: DMMF.Field) => f.documentation?.includes("@HideField()") ?? false;
+import { createClassField, getDefaultValue, graphqlField, graphqlType, type } from "./formatter";
+
+export function checkIsID(f: DMMF.Field): boolean {
+  return f.isId;
+}
+
+export function checkTypeJson(f: DMMF.Field): boolean {
+  return f.type === "Json";
+}
+
+export function checkCUID(f: DMMF.Field): boolean {
+  return typeof f.default === "object" && "name" in f.default && f.default.name === "cuid";
+}
+
+export function checkUUID(f: DMMF.Field): boolean {
+  return typeof f.default === "object" && "name" in f.default && f.default.name === "uuid";
+}
+
+export function checkAutoIncrement(f: DMMF.Field): boolean {
+  return typeof f.default === "object" && "name" in f.default && f.default.name === "autoincrement";
+}
+
+export function checkRequired(f: DMMF.Field): boolean {
+  return (f.isRequired || f.isId) && !f.relationName;
+}
+
+export function checkReadOnly(f: DMMF.Field): boolean {
+  return f.isReadOnly || f.isId;
+}
+
+export function checkOptional(f: DMMF.Field): boolean {
+  return f.isList || !f.isRequired || f.hasDefaultValue || Boolean(f.relationName);
+}
+
+export function checkHidden(f: DMMF.Field): boolean {
+  return f.documentation?.includes("@HideField()") ?? false;
+}
+
+export function checkCanCreate(f: DMMF.Field): boolean {
+  return !(checkHidden(f) || f.relationName || f.isUpdatedAt);
+}
+
+export function checkCanUpdate(f: DMMF.Field): boolean {
+  return !(checkHidden(f) || f.isReadOnly || f.isId || f.relationName || f.isUpdatedAt || f.name.startsWith("created"));
+}
+
+export function hasRelatedFields(m: DMMF.Model, f: DMMF.Field) {
+  return !m.fields
+    .filter(f => f.relationName)
+    .map(f => f.name)
+    .filter(relation => f.name.startsWith(relation)).length;
+}
 
 export function extractValidations(model: DMMF.Model) {
   let validations: string[] = [];
@@ -60,7 +98,6 @@ export function transformDMMF(dmmf: DMMF.Document, options: Options) {
         classValidator: extractValidations(model),
         enums: model.fields.filter(f => f.kind == "enum").map(f => f.type),
         relations: model.fields
-          .filter(f => f.kind == "object")
           .filter(f => f.relationName)
           .map(f => ({
             name: f.name,
@@ -68,14 +105,14 @@ export function transformDMMF(dmmf: DMMF.Document, options: Options) {
           })),
       },
       fields: model.fields.map(f => {
-        console.log(f.default);
         return {
           name: f.name,
           kind: f.kind,
-          classSomething: createClassField(f, { prefix: options.prefix }),
           type: type(f, { prefix: options.prefix }),
-          graphqlFields: graphqlFields(f, { prefix: options.prefix }),
+          graphqlType: graphqlType(f, { prefix: options.prefix }),
+          graphqlField: graphqlField(f, { prefix: options.prefix }),
           defaultValue: getDefaultValue(f),
+          isId: f.isId,
           isHidden: checkHidden(f),
           isRequired: checkRequired(f),
           isReadOnly: checkReadOnly(f),
@@ -83,6 +120,19 @@ export function transformDMMF(dmmf: DMMF.Document, options: Options) {
           isUUID: checkUUID(f),
           isCUID: checkCUID(f),
           isOptional: checkOptional(f),
+          isRelatedField: Boolean(f.relationName),
+          canCreate: checkCanCreate(f),
+          canUpdate: checkCanUpdate(f),
+
+          validationBlocks: f.documentation
+            // @see https://regex101.com/r/7Y548N/1
+            ?.match(/@Validate.[a-zA-Z]+\([a-zA-Z ,()'"[\]]+/g)
+            ?.map(m => m.split("@Validate.")[1])
+            .map(m => `@${m}`)
+            .join("\n"),
+
+          // potentially useless
+          classSomething: createClassField(f, { prefix: options.prefix }),
         };
       }),
     };

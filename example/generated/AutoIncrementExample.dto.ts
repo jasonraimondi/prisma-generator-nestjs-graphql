@@ -5,8 +5,9 @@
 
 import { Field, InputType, ID } from "@nestjs/graphql";
 
-import { AutoIncrementExampleConstructor } from "./AutoIncrementExample.model";
+import { AutoIncrementExample as PrismaAutoIncrementExample } from "@prisma/client";
 import { PaginatorInputs } from "./paginator";
+import { AutoIncrementExampleConstructor } from "./AutoIncrementExample.model";
 
 @InputType()
 export class AutoIncrementExampleCreateInput implements AutoIncrementExampleConstructor {
@@ -16,8 +17,8 @@ export class AutoIncrementExampleCreateInput implements AutoIncrementExampleCons
 
 @InputType()
 export class AutoIncrementExampleUpdateInput {
-  @Field(() => ID!, { nullable: false })
-  id!: number;
+  @Field(() => ID, { nullable: true })
+  id?: number;
 }
 
 @InputType()

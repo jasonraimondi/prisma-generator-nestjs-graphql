@@ -1,6 +1,6 @@
 import { DMMF } from "@prisma/generator-helper";
 
-import { AUTO_GENERATED_MESSAGE } from "../constants/constants";
+import { AUTO_GENERATED_MESSAGE } from "../constants";
 
 type Data = {
   enums: DMMF.DatamodelEnum[];

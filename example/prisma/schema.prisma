@@ -21,12 +21,16 @@ model User {
   passwordHash String?   @db.VarChar(255)
   /// @HideField()
   tokenVersion Int       @default(0)
+  /// @HideField()
   /// @Validate.IsDate() @Validate.MaxDate(new Date())
   lastLoginAt  DateTime? @db.Timestamp(6)
+  /// @HideField()
   /// @Validate.IsIP()
   createdIP    String    @db.Inet
+  /// @HideField()
   /// @Validate.IsDate() @Validate.MaxDate(new Date())
   createdAt    DateTime  @default(now()) @db.Timestamp(6)
+  /// @HideField()
   updatedAt    DateTime? @updatedAt
   posts        Post[]
 
