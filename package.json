@@ -5,6 +5,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest --coverage",
     "build": "tsc --project tsconfig.build.json",
     "format": "prettier --write \"src/**/*.(t|j)s*\"",
     "prepublish": "rm -rf ./dist && pnpm build"
@@ -26,6 +27,7 @@
     "prettier": "^3.0.3",
     "prisma": "^5.2.0",
     "typescript": "^5.2.2",
+    "vite": "^4.4.9",
     "vitest": "^0.34.4"
   },
   "publishConfig": {
