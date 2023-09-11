@@ -122,7 +122,7 @@ export function transformDMMF(dmmf: DMMF.Document, options: Options) {
             ?.match(/@Validate.[a-zA-Z]+\([a-zA-Z ,()'"[\]]+/g)
             ?.map(m => m.split("@Validate.")[1])
             .map(m => `@${m}`)
-            .join("\n"),
+            .join("\n") as string | undefined,
         };
       }),
     };

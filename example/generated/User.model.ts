@@ -27,6 +27,7 @@ export class BaseUser implements PrismaUser {
   @Field(() => ID, { nullable: false })
   readonly id: string;
 
+  @IsEmail()
   @Field(() => String!, { nullable: false })
   email: string;
 
@@ -36,12 +37,17 @@ export class BaseUser implements PrismaUser {
   @HideField()
   tokenVersion: number;
 
+  @IsDate()
+  @MaxDate(new Date())
   @HideField()
   lastLoginAt: null | Date;
 
+  @IsIP()
   @HideField()
   createdIP: string;
 
+  @IsDate()
+  @MaxDate(new Date())
   @HideField()
   createdAt: Date;
 

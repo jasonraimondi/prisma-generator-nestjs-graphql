@@ -36,6 +36,7 @@ export async function generateModelTemplate(model: ReturnType<typeof transformDM
       ${model.fields
         .map(
           f => `
+         ${f.validationBlocks ? f.validationBlocks : ""}
          ${f.isHidden ? "@HideField()" : f.graphqlField}
          ${f.isReadOnly ? "readonly " : ""}${f.name}${f.isRequired ? ":" : ": null |"} ${f.type};
       `,
