@@ -24,6 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup
-      - run: pnpm publish --access=public
+      - run: pnpm publish --access=public --publish-branch=HEAD --json
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
