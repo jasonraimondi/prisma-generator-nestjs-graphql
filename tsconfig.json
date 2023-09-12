@@ -14,9 +14,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "moduleResolution": "Node",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "newLine": "lf"
+    "outDir": "./dist"
   },
   "include": ["src/**/*", "tests/**/*"],
   "exclude": ["**/node_modules", "**/*.test.ts","**/__tests__", "**/dest", "copy/**/*.ts"]

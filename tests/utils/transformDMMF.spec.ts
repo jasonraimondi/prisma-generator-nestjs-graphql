@@ -1,8 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { getDMMF } from "@prisma/internals";
 import { transformDMMF } from "../../src/utils/transformDMMF";
+import { TESTING_OPTIONS } from "../helpers";
 
 describe("transformDMMF", () => {
+  const config = TESTING_OPTIONS;
+
   describe("kitchen sink", () => {
     const datamodelString = `
       model User {
@@ -44,7 +47,7 @@ describe("transformDMMF", () => {
     it("success", async () => {
       const dmmf = await getDMMF({ datamodel: datamodelString });
 
-      const [userModel] = transformDMMF(dmmf, { prefix: "" });
+      const [userModel] = transformDMMF(dmmf, config);
 
       expect(userModel.imports.id).toBe(true);
       expect(userModel.imports.hideField).toBe(true);
@@ -64,7 +67,7 @@ describe("transformDMMF", () => {
     });
   });
 
-  describe.skip("uuid", () => {
+  describe("uuid", () => {
     const datamodelString = `
       model UuidExample {
         /// @HideField()
@@ -75,9 +78,7 @@ describe("transformDMMF", () => {
     it("todo update this", async () => {
       const dmmf = await getDMMF({ datamodel: datamodelString });
 
-      const [uuidModel] = transformDMMF(dmmf, { prefix: "" });
-
-      console.log(uuidModel);
+      const [uuidModel] = transformDMMF(dmmf, config);
 
       expect(uuidModel.imports.id).toBe(true);
       expect(uuidModel.imports.uuid).toBe(true);

@@ -3,16 +3,10 @@ import { getDMMF } from "@prisma/internals";
 
 import { transformDMMF } from "../../src/utils/transformDMMF";
 import { generateModelTemplate } from "../../src/templates/model";
+import { TESTING_OPTIONS } from "../helpers";
 
 describe("model templater", () => {
-  const config = {
-    clientPath: "./client-path",
-    modelPrefix: "",
-    modelSuffix: "",
-    modelFileSuffix: "",
-    useAbstractModels: true,
-    compileJs: false,
-  };
+  const config = TESTING_OPTIONS;
 
   it("with json", async () => {
     const dmmf = await getDMMF({
