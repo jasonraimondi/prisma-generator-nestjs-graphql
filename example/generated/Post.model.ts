@@ -18,7 +18,7 @@ export type PostConstructor = {
   user?: BaseUser | null;
 };
 
-@ObjectType()
+@ObjectType({ isAbstract: true })
 export class BasePost implements PrismaPost {
   @Field(() => ID, { nullable: false })
   readonly id: string;
@@ -51,7 +51,11 @@ export class BasePost implements PrismaPost {
     return new BasePost(data);
   }
 
-  // this method removes all relational fields from the entity, and returns the base PrismaModel
+  /**
+   * Removes all relational fields from the model
+   * so you can use it to create or update a record of this model
+   * @returns PrismaPost
+   */
   toPrisma(): PrismaPost {
     const { user, ...entity } = this;
     return entity;

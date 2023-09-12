@@ -10,7 +10,7 @@ export type IntExampleConstructor = {
   id: number;
 };
 
-@ObjectType()
+@ObjectType({ isAbstract: true })
 export class BaseIntExample implements PrismaIntExample {
   @Field(() => ID, { nullable: false })
   readonly id: number;
@@ -23,7 +23,11 @@ export class BaseIntExample implements PrismaIntExample {
     return new BaseIntExample(data);
   }
 
-  // this method removes all relational fields from the entity, and returns the base PrismaModel
+  /**
+   * Removes all relational fields from the model
+   * so you can use it to create or update a record of this model
+   * @returns PrismaIntExample
+   */
   toPrisma(): PrismaIntExample {
     const { ...entity } = this;
     return entity;

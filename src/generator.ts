@@ -8,6 +8,7 @@ import { writeFile } from "./utils/writeFile";
 import { registerEnumsTemplate } from "./templates/register_enums";
 import { transformDMMF } from "./utils/transformDMMF";
 import { generateModelTemplate } from "./templates/model";
+import { parseConfig } from "./utils/config";
 
 const { version } = require("../package.json");
 
@@ -21,12 +22,7 @@ generatorHandler({
     };
   },
   onGenerate: async (options: GeneratorOptions) => {
-    const config = {
-      clientPath: String(options.generator.config.clientPath ?? "@prisma/client"),
-      prefix: String(options.generator.config.prefix ?? "Base"),
-      abstract: options.generator.config.abstract === "true",
-      compileJs: options.generator.config.compileJs !== "false",
-    };
+    const config = parseConfig(options.generator.config);
 
     const writePath = (filePath: string) => path.join(options.generator.output?.value!, filePath);
 
@@ -34,7 +30,7 @@ generatorHandler({
 
     for (const model of newDMMF) {
       const modelTemplate = await generateModelTemplate(model, config);
-      const modelPath = writePath(`./${model.name}.model.ts`);
+      const modelPath = writePath(`./${model.name}${config.modelFileSuffix}.ts`);
       await writeFile(modelPath, modelTemplate, config.compileJs);
     }
 

@@ -5,7 +5,14 @@ import { transformDMMF } from "../../src/utils/transformDMMF";
 import { generateModelTemplate } from "../../src/templates/model";
 
 describe("model templater", () => {
-  const config = { prefix: "", abstract: true, clientPath: "./client-path" };
+  const config = {
+    clientPath: "./client-path",
+    modelPrefix: "",
+    modelSuffix: "",
+    modelFileSuffix: "",
+    useAbstractModels: true,
+    compileJs: false,
+  };
 
   it("with json", async () => {
     const dmmf = await getDMMF({

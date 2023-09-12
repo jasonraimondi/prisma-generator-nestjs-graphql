@@ -1,12 +1,11 @@
 import { DMMF } from "@prisma/generator-helper";
+import { ModelOptions } from "../constants";
 
-type TypeArgs = {
-  prefix: string;
-};
+type TypeArgs = Pick<ModelOptions, "modelPrefix" | "modelSuffix">;
 
-export function type(f: DMMF.Field, { prefix }: TypeArgs) {
+export function type(f: DMMF.Field, { modelPrefix, modelSuffix }: TypeArgs) {
   let result: null | string = null;
-  if (f.kind === "object") result = `${prefix}${f.type}`;
+  if (f.kind === "object") result = `${modelPrefix}${f.type}${modelSuffix}`;
   if (f.kind === "enum") result = `(typeof ${f.type})[keyof typeof ${f.type}]`;
   const map: Record<string, string> = {
     String: "string",
@@ -22,18 +21,18 @@ export function type(f: DMMF.Field, { prefix }: TypeArgs) {
 
 type GraphqlTypeArgs = {
   forceOptional?: boolean;
-  prefix: string;
-};
+} & Pick<ModelOptions, "modelPrefix" | "modelSuffix">;
 
 export const isRequired = (f: DMMF.Field) => (f.isRequired || f.isId) && !f.relationName;
 
-export function graphqlType(f: DMMF.Field, args: GraphqlTypeArgs) {
-  const { forceOptional = false, prefix } = args;
+export function graphqlType(f: DMMF.Field, config: GraphqlTypeArgs) {
+  const { forceOptional = false } = config;
   const map: Record<string, string> = {
     DateTime: "Date",
     Json: "GraphQLJSON",
   };
-  const result = f.kind === "object" ? `${prefix}${f.type}` : `${map[f.type] ?? f.type}`;
+  const result =
+    f.kind === "object" ? `${config.modelPrefix}${f.type}${config.modelSuffix}` : `${map[f.type] ?? f.type}`;
   if (f.isList) return `[${result}${!forceOptional && isRequired(f) ? "!]!" : "]"}`;
   return `${result}${!forceOptional && isRequired(f) ? "!" : ""}`;
 }
@@ -58,10 +57,8 @@ export function getDefaultValue(field: DMMF.Field) {
   return false;
 }
 
-type GraphqlFieldsArgs = {
-  prefix: string;
-};
+type GraphqlFieldsArgs = Pick<ModelOptions, "modelPrefix" | "modelSuffix">;
 
-export function graphqlField(f: DMMF.Field, { prefix }: GraphqlFieldsArgs) {
-  return `@Field(() => ${f.isId ? "ID" : graphqlType(f, { prefix })}, { nullable: ${!isRequired(f)} })`;
+export function graphqlField(f: DMMF.Field, args: GraphqlFieldsArgs) {
+  return `@Field(() => ${f.isId ? "ID" : graphqlType(f, args)}, { nullable: ${!isRequired(f)} })`;
 }

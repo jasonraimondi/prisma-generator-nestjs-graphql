@@ -12,7 +12,7 @@ export type UuidExampleConstructor = {
   id?: string | null;
 };
 
-@ObjectType()
+@ObjectType({ isAbstract: true })
 export class BaseUuidExample implements PrismaUuidExample {
   @Field(() => ID, { nullable: false })
   readonly id: string;
@@ -25,7 +25,11 @@ export class BaseUuidExample implements PrismaUuidExample {
     return new BaseUuidExample(data);
   }
 
-  // this method removes all relational fields from the entity, and returns the base PrismaModel
+  /**
+   * Removes all relational fields from the model
+   * so you can use it to create or update a record of this model
+   * @returns PrismaUuidExample
+   */
   toPrisma(): PrismaUuidExample {
     const { ...entity } = this;
     return entity;

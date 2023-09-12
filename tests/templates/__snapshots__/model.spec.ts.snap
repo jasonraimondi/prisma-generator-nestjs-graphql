@@ -26,7 +26,11 @@ export class User implements PrismaUser {
     return new User(data);
   }
 
-  // this method removes all relational fields from the entity, and returns the base PrismaModel
+  /**
+   * Removes all relational fields from the model
+   * so you can use it to create or update a record of this model
+   * @returns PrismaUser
+   */
   toPrisma(): PrismaUser {
     const { ...entity } = this;
     return entity;
@@ -65,7 +69,11 @@ export class User implements PrismaUser {
     return new User(data);
   }
 
-  // this method removes all relational fields from the entity, and returns the base PrismaModel
+  /**
+   * Removes all relational fields from the model
+   * so you can use it to create or update a record of this model
+   * @returns PrismaUser
+   */
   toPrisma(): PrismaUser {
     const { ...entity } = this;
     return entity;
@@ -107,7 +115,11 @@ export class User implements PrismaUser {
     return new User(data);
   }
 
-  // this method removes all relational fields from the entity, and returns the base PrismaModel
+  /**
+   * Removes all relational fields from the model
+   * so you can use it to create or update a record of this model
+   * @returns PrismaUser
+   */
   toPrisma(): PrismaUser {
     const { ...entity } = this;
     return entity;
@@ -151,7 +163,11 @@ export class User implements PrismaUser {
     return new User(data);
   }
 
-  // this method removes all relational fields from the entity, and returns the base PrismaModel
+  /**
+   * Removes all relational fields from the model
+   * so you can use it to create or update a record of this model
+   * @returns PrismaUser
+   */
   toPrisma(): PrismaUser {
     const { ...entity } = this;
     return entity;
@@ -170,7 +186,7 @@ exports[`model templater > with relation 1`] = `
 
 import { ObjectType, Field, ID } from \\"@nestjs/graphql\\";
 import { User as PrismaUser } from \\"./client-path\\";
-import { Post } from \\"./Post.model\\";
+import { Post } from \\"./Post\\";
 
 export type UserConstructor = {
   id: string;
@@ -194,7 +210,11 @@ export class User implements PrismaUser {
     return new User(data);
   }
 
-  // this method removes all relational fields from the entity, and returns the base PrismaModel
+  /**
+   * Removes all relational fields from the model
+   * so you can use it to create or update a record of this model
+   * @returns PrismaUser
+   */
   toPrisma(): PrismaUser {
     const { posts, ...entity } = this;
     return entity;
@@ -233,7 +253,11 @@ export class User implements PrismaUser {
     return new User(data);
   }
 
-  // this method removes all relational fields from the entity, and returns the base PrismaModel
+  /**
+   * Removes all relational fields from the model
+   * so you can use it to create or update a record of this model
+   * @returns PrismaUser
+   */
   toPrisma(): PrismaUser {
     const { ...entity } = this;
     return entity;

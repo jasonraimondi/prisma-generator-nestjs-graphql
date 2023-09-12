@@ -1,6 +1,7 @@
 import { DMMF } from "@prisma/generator-helper";
 
 import { getDefaultValue, graphqlField, graphqlType, type } from "./formatter";
+import { ModelOptions } from "../constants";
 
 export function checkIsID(f: DMMF.Field): boolean {
   return f.isId;
@@ -70,17 +71,11 @@ export function extractNestGraphql(model: DMMF.Model) {
   return nestGraphqlImports.length ? nestGraphqlImports : false;
 }
 
-export type Options = {
-  prefix: string;
-};
-
-export function transformDMMF(dmmf: DMMF.Document, options: Options) {
+export function transformDMMF(dmmf: DMMF.Document, options: ModelOptions) {
   return dmmf.datamodel.models.map(model => {
     return {
-      // ...model,
       name: model.name,
-      // importNestjsGraphql: importNestjsGraphql(model),
-      // nestGraphqlImports,
+      fullName: options.modelPrefix + model.name + options.modelSuffix,
       imports: {
         id: model.fields.some(checkIsID),
         cuid: model.fields.some(checkCUID),
@@ -101,9 +96,9 @@ export function transformDMMF(dmmf: DMMF.Document, options: Options) {
         return {
           name: f.name,
           kind: f.kind,
-          type: type(f, { prefix: options.prefix }),
-          graphqlType: graphqlType(f, { prefix: options.prefix }),
-          graphqlField: graphqlField(f, { prefix: options.prefix }),
+          type: type(f, options),
+          graphqlType: graphqlType(f, options),
+          graphqlField: graphqlField(f, options),
           defaultValue: getDefaultValue(f),
           isId: f.isId,
           isHidden: checkHidden(f),

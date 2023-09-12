@@ -7,8 +7,17 @@ export const AUTO_GENERATED_MESSAGE = `
 /////////////////////////////////////
 `;
 
+export const toPrismaDocBloc = (name: string) => `/**
+* Removes all relational fields from the model 
+* so you can use it to create or update a record of this model
+* @returns Prisma${name}
+*/`;
+
 export type ModelOptions = {
   clientPath: string;
-  prefix: string;
-  abstract: boolean;
+  useAbstractModels: boolean;
+  compileJs: boolean;
+  modelPrefix: string;
+  modelSuffix: string;
+  modelFileSuffix: string;
 };

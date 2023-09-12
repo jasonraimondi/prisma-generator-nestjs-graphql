@@ -13,7 +13,7 @@ export type JSONExampleConstructor = {
   jsonCol: Prisma.JsonValue;
 };
 
-@ObjectType()
+@ObjectType({ isAbstract: true })
 export class BaseJSONExample implements PrismaJSONExample {
   @Field(() => ID, { nullable: false })
   readonly id: number;
@@ -30,7 +30,11 @@ export class BaseJSONExample implements PrismaJSONExample {
     return new BaseJSONExample(data);
   }
 
-  // this method removes all relational fields from the entity, and returns the base PrismaModel
+  /**
+   * Removes all relational fields from the model
+   * so you can use it to create or update a record of this model
+   * @returns PrismaJSONExample
+   */
   toPrisma(): PrismaJSONExample {
     const { ...entity } = this;
     return entity;
