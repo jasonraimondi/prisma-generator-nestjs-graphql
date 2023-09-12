@@ -15,9 +15,10 @@ export const toPrismaDocBloc = (name: string) => `/**
 
 export type ModelOptions = {
   clientPath: string;
-  useAbstractModels: boolean;
-  compileJs: boolean;
   modelPrefix: string;
   modelSuffix: string;
   modelFileSuffix: string;
+  useAbstractModels: boolean;
+  compileJs: boolean;
+  withPaginatorInputs: boolean;
 };

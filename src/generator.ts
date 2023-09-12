@@ -43,8 +43,10 @@ generatorHandler({
       config.compileJs,
     );
 
-    const contents = await fs.readFile(path.join(__dirname, "../copy/paginator.ts"));
-    await writeFile(writePath("./paginator.ts"), contents.toString(), config.compileJs);
+    if (config.withPaginatorInputs) {
+      const contents = await fs.readFile(path.join(__dirname, "../copy/paginator.ts"));
+      await writeFile(writePath("./paginator.ts"), contents.toString(), config.compileJs);
+    }
 
     const globPath = writePath(`./`);
     const files = (await fs.readdir(globPath)).map(name => name.replace(".ts", ""));

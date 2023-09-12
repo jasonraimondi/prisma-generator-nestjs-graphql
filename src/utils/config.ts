@@ -8,5 +8,6 @@ export function parseConfig(config: Record<string, string | string[] | undefined
     modelFileSuffix: String(config.modelFileSuffix ?? ""),
     useAbstractModels: config.useAbstractModels === "true",
     compileJs: config.compileJs === "true",
+    withPaginatorInputs: config.withPaginatorInputs === "true",
   };
 }
