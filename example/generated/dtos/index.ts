@@ -2,6 +2,7 @@ export * from "./AutoIncrementExample.dto";
 export * from "./CuidExample.dto";
 export * from "./IntExample.dto";
 export * from "./JSONExample.dto";
+export * from "./NoId.dto";
 export * from "./Post.dto";
 export * from "./StringExample.dto";
 export * from "./User.dto";

@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "removeComments": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "baseUrl": ".",
     "moduleResolution": "Node",

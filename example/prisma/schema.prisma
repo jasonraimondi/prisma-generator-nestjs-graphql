@@ -39,8 +39,18 @@ model User {
   /// @HideField()
   updatedAt    DateTime? @updatedAt
   posts        Post[]
+  noId         NoId[]
 
   @@index([email])
+}
+
+model NoId {
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+
+  @@id([userId])
+  @@index([userId])
 }
 
 enum Tag {

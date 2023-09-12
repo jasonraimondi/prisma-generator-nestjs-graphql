@@ -2,6 +2,7 @@ import { AUTO_GENERATED_MESSAGE, ModelOptions, MyDMMF } from "../constants";
 import { formatWithPrettier } from "../utils/writeFile";
 
 export async function generateDtoTemplate(m: MyDMMF, config: ModelOptions) {
+  const idField = m.fields.find(f => f.isId);
   return await formatWithPrettier(`
     ${AUTO_GENERATED_MESSAGE}
     ${m.imports.graphqlJSONImport ? "import GraphQLJSON from 'graphql-type-json';" : ""}
@@ -35,8 +36,14 @@ export async function generateDtoTemplate(m: MyDMMF, config: ModelOptions) {
     
     @InputType()
     export class ${m.name}UpdateInput {
+    ${
+      idField
+        ? `
       @Field(() => ID, { nullable: true })  
-      ${m.fields.find(f => f.isId)!.name}?: ${m.fields.find(f => f.isId)!.type}
+      ${idField.name}?: ${idField.type}
+    `
+        : ""
+    }
     
     ${m.fields
       .filter(f => f.canUpdate)

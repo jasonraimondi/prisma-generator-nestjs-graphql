@@ -9,6 +9,7 @@ import { IsEmail, IsDate, MaxDate, IsIP } from "class-validator";
 import { ObjectType, Field, ID, HideField, Int } from "@nestjs/graphql";
 import { User as PrismaUser } from "@prisma/client";
 import { BasePost } from "./Post.model";
+import { BaseNoId } from "./NoId.model";
 
 export type UserConstructor = {
   id?: string | null;
@@ -20,6 +21,7 @@ export type UserConstructor = {
   createdAt?: Date | null;
   updatedAt?: Date | null;
   posts?: BasePost[] | null;
+  noId?: BaseNoId[] | null;
 };
 
 @ObjectType({ isAbstract: true })
@@ -57,6 +59,9 @@ export class BaseUser implements PrismaUser {
   @Field(() => [BasePost], { nullable: true })
   posts: null | BasePost[];
 
+  @Field(() => [BaseNoId], { nullable: true })
+  noId: null | BaseNoId[];
+
   constructor(model: UserConstructor) {
     this.id = model.id ?? uuid();
     this.email = model.email;
@@ -67,6 +72,7 @@ export class BaseUser implements PrismaUser {
     this.createdAt = model.createdAt ?? new Date();
     this.updatedAt = model.updatedAt ?? null;
     this.posts = model.posts ?? null;
+    this.noId = model.noId ?? null;
   }
 
   static fromPrisma(data: PrismaUser): BaseUser {
@@ -79,7 +85,7 @@ export class BaseUser implements PrismaUser {
    * @returns PrismaUser
    */
   toPrisma(): PrismaUser {
-    const { posts, ...entity } = this;
+    const { posts, noId, ...entity } = this;
     return entity;
   }
 }

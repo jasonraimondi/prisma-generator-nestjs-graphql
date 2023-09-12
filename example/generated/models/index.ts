@@ -2,6 +2,7 @@ export * from "./AutoIncrementExample.model";
 export * from "./CuidExample.model";
 export * from "./IntExample.model";
 export * from "./JSONExample.model";
+export * from "./NoId.model";
 export * from "./Post.model";
 export * from "./StringExample.model";
 export * from "./User.model";
