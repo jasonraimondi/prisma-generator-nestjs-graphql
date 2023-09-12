@@ -9,6 +9,7 @@ describe("#parseConfig", () => {
     expect(parsedConfig.modelPrefix).toBe("");
     expect(parsedConfig.modelSuffix).toBe("");
     expect(parsedConfig.modelFileSuffix).toBe("");
+    expect(parsedConfig.dtoFileSuffix).toBe("");
     expect(parsedConfig.useAbstractModels).toBe(true);
     expect(parsedConfig.compileJs).toBe(false);
     expect(parsedConfig.withPaginatorInputs).toBe(false);
@@ -20,6 +21,7 @@ describe("#parseConfig", () => {
       modelPrefix: "Abstract",
       modelSuffix: "Model",
       modelFileSuffix: ".model",
+      dtoFileSuffix: ".dto",
       useAbstractModels: "false",
       compileJs: "true",
       withPaginatorInputs: "true",
@@ -29,6 +31,7 @@ describe("#parseConfig", () => {
     expect(parsedConfig.modelPrefix).toBe("Abstract");
     expect(parsedConfig.modelSuffix).toBe("Model");
     expect(parsedConfig.modelFileSuffix).toBe(".model");
+    expect(parsedConfig.dtoFileSuffix).toBe(".dto");
     expect(parsedConfig.useAbstractModels).toBe(false);
     expect(parsedConfig.compileJs).toBe(true);
     expect(parsedConfig.withPaginatorInputs).toBe(true);

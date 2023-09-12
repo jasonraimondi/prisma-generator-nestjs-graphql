@@ -5,6 +5,7 @@ export const TESTING_OPTIONS: ModelOptions = {
   modelPrefix: "",
   modelSuffix: "",
   modelFileSuffix: "",
+  dtoFileSuffix: "",
   useAbstractModels: true,
   compileJs: false,
   withPaginatorInputs: false,

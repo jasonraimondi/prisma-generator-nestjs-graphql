@@ -6,7 +6,7 @@
 import { v4 as uuid } from "uuid";
 
 import { IsEmail, IsDate, MaxDate, IsIP } from "class-validator";
-import { ObjectType, Field, ID, HideField } from "@nestjs/graphql";
+import { ObjectType, Field, ID, HideField, Int } from "@nestjs/graphql";
 import { User as PrismaUser } from "@prisma/client";
 import { BasePost } from "./Post.model";
 

@@ -9,6 +9,7 @@ import { registerEnumsTemplate } from "./templates/register_enums";
 import { transformDMMF } from "./utils/transformDMMF";
 import { generateModelTemplate } from "./templates/model";
 import { parseConfig } from "./utils/config";
+import { generateDtoTemplate } from "./templates/dto";
 
 const { version } = require("../package.json");
 
@@ -30,8 +31,12 @@ generatorHandler({
 
     for (const model of newDMMF) {
       const modelTemplate = await generateModelTemplate(model, config);
-      const modelPath = writePath(`./${model.name}${config.modelFileSuffix}.ts`);
+      const modelPath = writePath(`./models/${model.name}${config.modelFileSuffix}.ts`);
       await writeFile(modelPath, modelTemplate, config.compileJs);
+
+      const dtoTemplate = await generateDtoTemplate(model, config);
+      const dtoPath = writePath(`./dtos/${model.name}${config.dtoFileSuffix}.ts`);
+      await writeFile(dtoPath, dtoTemplate, config.compileJs);
     }
 
     const registerEnumsPath = writePath(`./register.ts`);
@@ -48,12 +53,19 @@ generatorHandler({
       await writeFile(writePath("./paginator.ts"), contents.toString(), config.compileJs);
     }
 
-    const globPath = writePath(`./`);
-    const files = (await fs.readdir(globPath)).map(name => name.replace(".ts", ""));
-    const exports = files
-      .filter(file => file !== "index")
-      .map(file => `export * from "./${file}";`)
-      .join("\n");
-    await writeFile(writePath("./index.ts"), exports, config.compileJs);
+    async function writeIndexForDirectory(path: string) {
+      if (path.at(-1) !== "/") path += "/";
+      const globPath = writePath(path);
+      const files = (await fs.readdir(globPath)).map(name => name.replace(".ts", ""));
+      const exports = files
+        .filter(file => file !== "index")
+        .map(file => `export * from "./${file}";`)
+        .join("\n");
+      await writeFile(writePath(path + "index.ts"), exports, config.compileJs);
+    }
+
+    await writeIndexForDirectory("./models");
+    await writeIndexForDirectory("./dtos");
+    await writeIndexForDirectory("./");
   },
 });

@@ -1,8 +1,7 @@
-import { transformDMMF } from "../utils/transformDMMF";
-import { AUTO_GENERATED_MESSAGE, ModelOptions, toPrismaDocBloc } from "../constants";
+import { AUTO_GENERATED_MESSAGE, ModelOptions, MyDMMF, toPrismaDocBloc } from "../constants";
 import { formatWithPrettier } from "../utils/writeFile";
 
-export async function generateModelTemplate(model: ReturnType<typeof transformDMMF>[number], config: ModelOptions) {
+export async function generateModelTemplate(model: MyDMMF, config: ModelOptions) {
   return await formatWithPrettier(`
 ${AUTO_GENERATED_MESSAGE}
 ${model.imports.uuid ? "import { v4 as uuid } from 'uuid';" : ""}

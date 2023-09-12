@@ -1,3 +1,5 @@
+import { transformDMMF } from "./utils/transformDMMF";
+
 export const GENERATOR_NAME = "prisma-generator-nestjs-graphql";
 
 export const AUTO_GENERATED_MESSAGE = `
@@ -18,7 +20,10 @@ export type ModelOptions = {
   modelPrefix: string;
   modelSuffix: string;
   modelFileSuffix: string;
+  dtoFileSuffix: string;
   useAbstractModels: boolean;
   compileJs: boolean;
   withPaginatorInputs: boolean;
 };
+
+export type MyDMMF = ReturnType<typeof transformDMMF>[number];

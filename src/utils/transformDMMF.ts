@@ -40,7 +40,7 @@ export function checkHidden(f: DMMF.Field): boolean {
 }
 
 export function checkCanCreate(f: DMMF.Field): boolean {
-  return !(checkHidden(f) || f.relationName || f.isUpdatedAt);
+  return !(f.relationName || f.isUpdatedAt);
 }
 
 export function checkCanUpdate(f: DMMF.Field): boolean {
@@ -58,14 +58,13 @@ export function extractValidations(model: DMMF.Model) {
 }
 
 export function extractNestGraphql(model: DMMF.Model) {
-  const hideField = (f: DMMF.Field) => f.documentation?.includes("@HideField()") ?? false;
   let nestGraphqlImports: string[] = [];
   model.fields
-    .filter(f => !f.isId)
+    // .filter(f => !f.isId)
     .filter(f => !f.relationName)
     .filter(f => !f.isUpdatedAt)
     .forEach(f => {
-      if (f.type === "Int" && !hideField(f)) nestGraphqlImports.push("Int");
+      if (f.type === "Int") nestGraphqlImports.push("Int");
     });
   nestGraphqlImports = [...new Set(nestGraphqlImports)];
   return nestGraphqlImports.length ? nestGraphqlImports : false;

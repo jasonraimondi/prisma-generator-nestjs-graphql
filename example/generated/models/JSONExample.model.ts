@@ -5,7 +5,7 @@
 
 import GraphQLJSON from "graphql-type-json";
 
-import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { ObjectType, Field, ID, Int } from "@nestjs/graphql";
 import { Prisma, JSONExample as PrismaJSONExample } from "@prisma/client";
 
 export type JSONExampleConstructor = {

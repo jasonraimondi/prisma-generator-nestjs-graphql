@@ -6,6 +6,7 @@ export function parseConfig(config: Record<string, string | string[] | undefined
     modelPrefix: String(config.modelPrefix ?? ""),
     modelSuffix: String(config.modelSuffix ?? ""),
     modelFileSuffix: String(config.modelFileSuffix ?? ""),
+    dtoFileSuffix: String(config.dtoFileSuffix ?? ""),
     useAbstractModels: config.useAbstractModels !== "false",
     compileJs: config.compileJs === "true",
     withPaginatorInputs: config.withPaginatorInputs === "true",

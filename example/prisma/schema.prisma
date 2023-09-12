@@ -9,6 +9,7 @@ generator custom_generator {
   modelPrefix         = "Base"
   modelSuffix         = ""
   modelFileSuffix     = ".model"
+  dtoFileSuffix       = ".dto"
   useAbstractModels   = true
   compileJs           = false
   withPaginatorInputs = true
