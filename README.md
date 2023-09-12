@@ -12,12 +12,9 @@ pnpm add @jmondi/prisma-generator-nestjs-graphql
 
 ```prisma
 generator custom_generator {
-  provider   = "generate-nestjs-models"
-  clientPath = "@prisma/client"
-  output     = "../generated"
-  prefix     = "Base"
-  abstract   = false
-  compileJs  = false
+  provider           = "generate-nestjs-models"
+  clientPath         = "@prisma/client"
+  output             = "../generated"
 }
 ```
 
@@ -40,6 +37,27 @@ The special sauce here is the [type-safe constructors](https://github.com/jasonr
     this.posts = model.posts ?? null;
   }
 ```
+
+### Configuration
+
+The following are all the default options, feel free to change them to your liking.
+
+````prisma
+generator custom_generator {
+  provider           = "generate-nestjs-models"
+  clientPath         = "@prisma/client"
+  output             = "../generated"
+  modelPrefix        = "@prisma/client"
+  modelPrefix        = ""
+  modelSuffix        = ""
+  modelFileSuffix    = ""
+  useAbstractModels  = true
+  compileJs          = false
+  withPaginatorInput = false
+}
+````
+
+### Custom Entities
 
 Create your own entities by extending the generated base entities.
 

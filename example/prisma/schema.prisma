@@ -4,14 +4,14 @@ datasource db {
 }
 
 generator custom_generator {
-  provider           = "ts-node node_modules/@jmondi/prisma-generator-nestjs-graphql/src/generator.ts"
-  output             = "../generated"
-  modelPrefix        = "Base"
-  modelSuffix        = ""
-  modelFileSuffix    = ".model"
-  useAbstractModels  = true
-  compileJs          = false
-  withPaginatorInput = true
+  provider            = "ts-node node_modules/@jmondi/prisma-generator-nestjs-graphql/src/generator.ts"
+  output              = "../generated"
+  modelPrefix         = "Base"
+  modelSuffix         = ""
+  modelFileSuffix     = ".model"
+  useAbstractModels   = true
+  compileJs           = false
+  withPaginatorInputs = true
 }
 
 generator client {
