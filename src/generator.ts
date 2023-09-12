@@ -11,7 +11,7 @@ import { generateModelTemplate } from "./templates/model";
 import { parseConfig } from "./utils/config";
 import { generateDtoTemplate } from "./templates/dto";
 
-import { version } from "../package.json";
+const { version } = require("../package.json");
 
 generatorHandler({
   onManifest() {
