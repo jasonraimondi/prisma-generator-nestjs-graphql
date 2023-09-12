@@ -56,6 +56,6 @@ generatorHandler({
       .filter(file => file !== "index")
       .map(file => `export * from "./${file}";`)
       .join("\n");
-    await writeFile("./index.ts", exports, config.compileJs);
+    await writeFile(writePath("./index.ts"), exports, config.compileJs);
   },
 });
