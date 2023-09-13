@@ -11,19 +11,19 @@ import { PostConstructor } from "../models/Post.model";
 @InputType()
 export class PostCreateInput implements PostConstructor {
   @Field(() => ID, { nullable: false })
-  id!: string;
+  declare id: string;
 
   @Field(() => Category!, { nullable: false })
-  category!: (typeof Category)[keyof typeof Category];
+  declare category: (typeof Category)[keyof typeof Category];
 
   @Field(() => [Tag!]!, { nullable: false })
-  tags!: (typeof Tag)[keyof typeof Tag][];
+  declare tags: (typeof Tag)[keyof typeof Tag][];
 
   @Field(() => String!, { nullable: false })
-  body!: string;
+  declare body: string;
 
   @Field(() => String!, { nullable: false })
-  userId!: string;
+  declare userId: string;
 }
 
 @InputType()

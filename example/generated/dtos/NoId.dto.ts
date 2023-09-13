@@ -11,10 +11,10 @@ import { NoIdConstructor } from "../models/NoId.model";
 @InputType()
 export class NoIdCreateInput implements NoIdConstructor {
   @Field(() => ID, { nullable: false })
-  userId!: string;
+  declare userId: string;
 
   @Field(() => Date!, { nullable: false })
-  createdAt!: Date;
+  declare createdAt: Date;
 }
 
 @InputType()

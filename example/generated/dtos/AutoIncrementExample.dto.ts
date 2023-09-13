@@ -11,7 +11,7 @@ import { AutoIncrementExampleConstructor } from "../models/AutoIncrementExample.
 @InputType()
 export class AutoIncrementExampleCreateInput implements AutoIncrementExampleConstructor {
   @Field(() => ID, { nullable: false })
-  id!: number;
+  declare id: number;
 }
 
 @InputType()

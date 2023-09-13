@@ -11,7 +11,7 @@ import { StringExampleConstructor } from "../models/StringExample.model";
 @InputType()
 export class StringExampleCreateInput implements StringExampleConstructor {
   @Field(() => ID, { nullable: false })
-  id!: string;
+  declare id: string;
 }
 
 @InputType()

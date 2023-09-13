@@ -11,7 +11,7 @@ import { UuidRequiredExampleConstructor } from "../models/UuidRequiredExample.mo
 @InputType()
 export class UuidRequiredExampleCreateInput implements UuidRequiredExampleConstructor {
   @Field(() => ID, { nullable: false })
-  id!: string;
+  declare id: string;
 }
 
 @InputType()

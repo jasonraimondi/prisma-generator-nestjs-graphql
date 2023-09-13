@@ -12,17 +12,17 @@ import { UserConstructor } from "../models/User.model";
 @InputType()
 export class UserCreateInput implements UserConstructor {
   @Field(() => ID, { nullable: false })
-  id!: string;
+  declare id: string;
 
   @IsEmail()
   @Field(() => String!, { nullable: false })
-  email!: string;
+  declare email: string;
 
   @Field(() => String, { nullable: true })
   passwordHash?: string;
 
   @Field(() => Int!, { nullable: false })
-  tokenVersion!: number;
+  declare tokenVersion: number;
 
   @IsDate()
   @MaxDate(new Date())
@@ -31,12 +31,12 @@ export class UserCreateInput implements UserConstructor {
 
   @IsIP()
   @Field(() => String!, { nullable: false })
-  createdIP!: string;
+  declare createdIP: string;
 
   @IsDate()
   @MaxDate(new Date())
   @Field(() => Date!, { nullable: false })
-  createdAt!: Date;
+  declare createdAt: Date;
 }
 
 @InputType()

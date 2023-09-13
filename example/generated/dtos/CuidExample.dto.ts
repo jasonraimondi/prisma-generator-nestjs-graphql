@@ -11,7 +11,7 @@ import { CuidExampleConstructor } from "../models/CuidExample.model";
 @InputType()
 export class CuidExampleCreateInput implements CuidExampleConstructor {
   @Field(() => ID, { nullable: false })
-  id!: string;
+  declare id: string;
 }
 
 @InputType()

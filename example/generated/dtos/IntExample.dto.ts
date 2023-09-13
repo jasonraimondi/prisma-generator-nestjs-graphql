@@ -11,7 +11,7 @@ import { IntExampleConstructor } from "../models/IntExample.model";
 @InputType()
 export class IntExampleCreateInput implements IntExampleConstructor {
   @Field(() => ID, { nullable: false })
-  id!: number;
+  declare id: number;
 }
 
 @InputType()

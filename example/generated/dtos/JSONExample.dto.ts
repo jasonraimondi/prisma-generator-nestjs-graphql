@@ -13,10 +13,10 @@ import { JSONExampleConstructor } from "../models/JSONExample.model";
 @InputType()
 export class JSONExampleCreateInput implements JSONExampleConstructor {
   @Field(() => ID, { nullable: false })
-  id!: number;
+  declare id: number;
 
   @Field(() => GraphQLJSON!, { nullable: false })
-  jsonCol!: Prisma.JsonValue;
+  declare jsonCol: Prisma.JsonValue;
 }
 
 @InputType()
