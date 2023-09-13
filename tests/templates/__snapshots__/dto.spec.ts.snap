@@ -14,7 +14,7 @@ import { UserConstructor } from \\"../models/User\\";
 @InputType()
 export class UserCreateInput implements UserConstructor {
   @Field(() => ID, { nullable: false })
-  id!: number;
+  declare id: number;
 }
 
 @InputType()
@@ -48,7 +48,7 @@ import { UserConstructor } from \\"../models/User\\";
 @InputType()
 export class UserCreateInput implements UserConstructor {
   @Field(() => ID, { nullable: false })
-  id!: string;
+  declare id: string;
 }
 
 @InputType()
@@ -82,10 +82,10 @@ import { UserConstructor } from \\"../models/User\\";
 @InputType()
 export class UserCreateInput implements UserConstructor {
   @Field(() => ID, { nullable: false })
-  id!: string;
+  declare id: string;
 
   @Field(() => Int!, { nullable: false })
-  favoriteNumber!: number;
+  declare favoriteNumber: number;
 }
 
 @InputType()
@@ -127,10 +127,10 @@ import { UserConstructor } from \\"../models/User\\";
 @InputType()
 export class UserCreateInput implements UserConstructor {
   @Field(() => ID, { nullable: false })
-  id!: number;
+  declare id: number;
 
   @Field(() => GraphQLJSON!, { nullable: false })
-  jsonCol!: Prisma.JsonValue;
+  declare jsonCol: Prisma.JsonValue;
 }
 
 @InputType()
@@ -170,7 +170,7 @@ import { UserConstructor } from \\"../models/User\\";
 @InputType()
 export class UserCreateInput implements UserConstructor {
   @Field(() => ID, { nullable: false })
-  id!: string;
+  declare id: string;
 }
 
 @InputType()
@@ -204,7 +204,7 @@ import { UserConstructor } from \\"../models/User\\";
 @InputType()
 export class UserCreateInput implements UserConstructor {
   @Field(() => ID, { nullable: false })
-  id!: string;
+  declare id: string;
 }
 
 @InputType()

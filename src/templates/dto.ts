@@ -28,7 +28,7 @@ export async function generateDtoTemplate(m: MyDMMF, config: ModelOptions) {
         f => `
           ${f.validationBlocks ? f.validationBlocks : ""}
           @Field(() => ${f.isId ? "ID" : f.graphqlType}, { nullable: ${!f.isRequired} })  
-          ${f.name}${!f.isRequired ? "?" : "!"}: ${f.type};
+          ${f.isRequired ? "declare " : ""}${f.name}${f.isRequired ? "" : "?"}: ${f.type};
         `,
       )
       .join("\n")}
