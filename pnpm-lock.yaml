@@ -7,6 +7,85 @@ settings:
 importers:
 
   .:
+    devDependencies:
+      '@vitest/coverage-v8':
+        specifier: ^0.34.4
+        version: 0.34.4(vitest@0.34.4)
+      vite:
+        specifier: ^4.4.9
+        version: 4.4.9(@types/node@20.6.0)
+      vitest:
+        specifier: ^0.34.4
+        version: 0.34.4
+
+  example:
+    dependencies:
+      '@nestjs/common':
+        specifier: ^10.2.4
+        version: 10.2.4(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.8.1)
+      '@nestjs/core':
+        specifier: ^10.2.4
+        version: 10.2.4(@nestjs/common@10.2.4)(reflect-metadata@0.1.13)(rxjs@7.8.1)
+      '@nestjs/graphql':
+        specifier: ^12.0.8
+        version: 12.0.8(@nestjs/common@10.2.4)(@nestjs/core@10.2.4)(class-validator@0.14.0)(graphql@16.8.0)(reflect-metadata@0.1.13)
+      '@prisma/client':
+        specifier: ^5.2.0
+        version: 5.2.0(prisma@5.2.0)
+      class-validator:
+        specifier: 0.14.0
+        version: 0.14.0
+      cuid:
+        specifier: ^3.0.0
+        version: 3.0.0
+      graphql-type-json:
+        specifier: ^0.3.2
+        version: 0.3.2(graphql@16.8.0)
+      prettier:
+        specifier: ^3.0.3
+        version: 3.0.3
+    devDependencies:
+      '@jmondi/prisma-generator-nestjs-graphql':
+        specifier: workspace:*
+        version: link:../packages/core
+      '@ngneat/falso':
+        specifier: ^7.1.0
+        version: 7.1.0
+      '@types/node':
+        specifier: ^20.6.0
+        version: 20.6.0
+      '@types/uuid':
+        specifier: ^9.0.3
+        version: 9.0.3
+      bcryptjs:
+        specifier: ^2.4.3
+        version: 2.4.3
+      graphql:
+        specifier: ^16.8.0
+        version: 16.8.0
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      prisma:
+        specifier: ^5.2.0
+        version: 5.2.0
+      reflect-metadata:
+        specifier: ^0.1.13
+        version: 0.1.13
+      rxjs:
+        specifier: ^7.8.1
+        version: 7.8.1
+      ts-node:
+        specifier: ^10.9.1
+        version: 10.9.1(@types/node@20.6.0)(typescript@5.2.2)
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+      uuid:
+        specifier: ^9.0.0
+        version: 9.0.0
+
+  packages/core:
     dependencies:
       '@prisma/client':
         specifier: ^5.2.0
@@ -48,73 +127,6 @@ importers:
       vitest:
         specifier: ^0.34.4
         version: 0.34.4
-
-  example:
-    dependencies:
-      '@nestjs/common':
-        specifier: ^10.2.4
-        version: 10.2.4(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.8.1)
-      '@nestjs/core':
-        specifier: ^10.2.4
-        version: 10.2.4(@nestjs/common@10.2.4)(reflect-metadata@0.1.13)(rxjs@7.8.1)
-      '@nestjs/graphql':
-        specifier: ^12.0.8
-        version: 12.0.8(@nestjs/common@10.2.4)(@nestjs/core@10.2.4)(class-validator@0.14.0)(graphql@16.8.0)(reflect-metadata@0.1.13)
-      '@prisma/client':
-        specifier: ^5.2.0
-        version: 5.2.0(prisma@5.2.0)
-      class-validator:
-        specifier: 0.14.0
-        version: 0.14.0
-      cuid:
-        specifier: ^3.0.0
-        version: 3.0.0
-      graphql-type-json:
-        specifier: ^0.3.2
-        version: 0.3.2(graphql@16.8.0)
-      prettier:
-        specifier: ^3.0.3
-        version: 3.0.3
-    devDependencies:
-      '@jmondi/prisma-generator-nestjs-graphql':
-        specifier: workspace:*
-        version: link:..
-      '@ngneat/falso':
-        specifier: ^7.1.0
-        version: 7.1.0
-      '@types/node':
-        specifier: ^20.6.0
-        version: 20.6.0
-      '@types/uuid':
-        specifier: ^9.0.3
-        version: 9.0.3
-      bcryptjs:
-        specifier: ^2.4.3
-        version: 2.4.3
-      graphql:
-        specifier: ^16.8.0
-        version: 16.8.0
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      prisma:
-        specifier: ^5.2.0
-        version: 5.2.0
-      reflect-metadata:
-        specifier: ^0.1.13
-        version: 0.1.13
-      rxjs:
-        specifier: ^7.8.1
-        version: 7.8.1
-      ts-node:
-        specifier: ^10.9.1
-        version: 10.9.1(@types/node@20.6.0)(typescript@5.2.2)
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-      uuid:
-        specifier: ^9.0.0
-        version: 9.0.0
 
 packages:
 
@@ -876,7 +888,7 @@ packages:
     dependencies:
       magic-string: 0.30.3
       pathe: 1.1.1
-      pretty-format: 29.6.3
+      pretty-format: 29.7.0
     dev: true
 
   /@vitest/spy@0.34.4:
@@ -890,7 +902,7 @@ packages:
     dependencies:
       diff-sequences: 29.6.3
       loupe: 2.3.6
-      pretty-format: 29.6.3
+      pretty-format: 29.7.0
     dev: true
 
   /acorn-walk@8.2.0:
@@ -2601,8 +2613,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  /pretty-format@29.6.3:
-    resolution: {integrity: sha512-ZsBgjVhFAj5KeK+nHfF1305/By3lechHQSMWCTl8iHSbfOm2TN5nHEtFc/+W7fAyUeCs2n5iow72gld4gW0xDw==}
+  /pretty-format@29.7.0:
+    resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/schemas': 29.6.3

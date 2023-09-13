@@ -1,7 +1,7 @@
 import { generatorHandler, GeneratorOptions } from "@prisma/generator-helper";
 import { logger } from "@prisma/internals";
-import path from "path";
-import fs from "fs/promises";
+import path from "node:path";
+import fs from "node:fs/promises";
 
 import { GENERATOR_NAME } from "./constants";
 import { writeFile } from "./utils/writeFile";

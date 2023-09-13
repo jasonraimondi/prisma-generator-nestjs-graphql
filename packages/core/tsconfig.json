@@ -13,10 +13,13 @@
     "removeComments": true,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "moduleResolution": "Node",
     "outDir": "./dist"
   },
-  "include": ["src/**/*", "tests/**/*"],
+  "include": [
+    "./src/**/*",
+    "./tests/**/*"
+  ],
   "exclude": ["**/node_modules", "**/*.test.ts","**/__tests__", "**/dest", "copy/**/*.ts"]
 }

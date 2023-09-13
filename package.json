@@ -1,41 +1,13 @@
 {
-  "name": "@jmondi/prisma-generator-nestjs-graphql",
-  "version": "2.1.2",
-  "main": "src/generator.ts",
+  "name": "prisma-generator-nestjs-graphql",
+  "version": "0.0.1",
+  "author": "Jason Raimondi <jason@raimondi.us>",
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest --coverage",
-    "build": "tsc --project tsconfig.build.json",
-    "format": "prettier --write \"src/**/*.(t|j)s*\"",
-    "prepublish": "rm -rf ./dist && pnpm build"
-  },
-  "bin": {
-    "generate-nestjs-models": "src/generator.ts"
-  },
-  "dependencies": {
-    "@prisma/client": "^5.2.0",
-    "@prisma/generator-helper": "^5.2.0",
-    "@prisma/internals": "^5.2.0",
-    "graphql": "^16.8.0",
-    "graphql-type-json": "^0.3.2"
+    "format": "pnpm format"
   },
   "devDependencies": {
-    "@types/node": "^20.6.0",
-    "@types/prettier": "^3.0.0",
     "@vitest/coverage-v8": "^0.34.4",
-    "prettier": "^3.0.3",
-    "prisma": "^5.2.0",
-    "typescript": "^5.2.2",
     "vite": "^4.4.9",
     "vitest": "^0.34.4"
-  },
-  "publishConfig": {
-    "main": "dist/generator.js",
-    "private": false,
-    "license": "MIT",
-    "bin": {
-      "generate-nestjs-models": "dist/generator.js"
-    }
   }
 }
