@@ -1,6 +1,6 @@
 {
   "name": "@jmondi/prisma-generator-nestjs-graphql",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
