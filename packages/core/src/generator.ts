@@ -56,9 +56,11 @@ generatorHandler({
     async function writeIndexForDirectory(path: string) {
       if (path.at(-1) !== "/") path += "/";
       const globPath = writePath(path);
-      const files = (await fs.readdir(globPath)).map(name => name.replace(".ts", ""));
+      const files = await fs.readdir(globPath);
       const exports = files
-        .filter(file => file !== "index")
+        .filter(file => file.endsWith(".js") || file.endsWith(".ts"))
+        .filter(file => file !== "index.ts")
+        .map(name => name.replace(".ts", ""))
         .map(file => `export * from "./${file}";`)
         .join("\n");
       await writeFile(writePath(path + "index.ts"), exports, config.compileJs);
